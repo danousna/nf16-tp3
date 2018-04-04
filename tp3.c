@@ -19,6 +19,12 @@ BlockChain ajouterBlock(BlockChain bc)
 
     // bc pointe vers le dernier block.
     newB->id = bc->id + 1;
+    if (bc == NULL) {
+        newB->id = 0;
+    } else {
+        newB->id = bc->id + 1;
+    }
+
     newB->liste = newL;
     newB->suiv = bc;
 
@@ -28,6 +34,17 @@ BlockChain ajouterBlock(BlockChain bc)
 float totalTransactionEtudiantBlock(int idEtu, T_Block b)
 {
 
+float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
+    float total = 0;
+    T_Transaction *next = b.liste;
+
+    while (next != NULL) {
+        if (next->id == idEtu) {
+            total += next->montant;
+        }
+        next = next->suiv;
+    }
+    return total;
 }
 
 float soldeEtudiant(int idEtu, BlockChain bc)
