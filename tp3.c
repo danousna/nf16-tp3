@@ -79,7 +79,17 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
 
 int payer(int idEtu, float montant, char *desc, BlockChain bc)
 {
+    if (montant < 0)
+        return 0;
 
+    if (soldeEtudiant(idEtu, bc) < montant)
+        return 0;
+    else
+    {
+        // On débite de - le montant du solde de l'étudiant.
+        ajouterTransaction(idEtu, -montant, desc, bc->liste); 
+        return 1;
+    }
 }
 
 void consulter(int idEtu, BlockChain bc) {
@@ -125,7 +135,17 @@ void afficherTransaction(T_Transaction *transaction, T_Block *block) {
     printf("%s\n", transaction->desc);
 }
 
-
-int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
-
+int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc)
+{
+    if (montant < 0)
+    {
+        printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
+        return 0;
+    }
+    else
+    {
+        payer(idSource, montant, desc, bc);
+        crediter(idDestination, montant, desc, bc);
+        return 1;
+    }
 }
