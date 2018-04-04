@@ -88,6 +88,7 @@ int payer(int idEtu, float montant, char *desc, BlockChain bc)
         return 0;
     else
     {
+        // On débite de - le montant du solde de l'étudiant.
         ajouterTransaction(idEtu, -montant, desc, bc->liste); 
         return 1;
     }
@@ -100,5 +101,15 @@ void consulter(int idEtu, BlockChain bc)
 
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc)
 {
-    payer(idSource, montant, desc, bc);
+    if (montant < 0)
+    {
+        printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
+        return 0;
+    }
+    else
+    {
+        payer(idSource, montant, desc, bc);
+        crediter(idDestination, montant, desc, bc);
+        return 1;
+    }
 }
