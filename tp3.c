@@ -122,7 +122,12 @@ void consulter(int idEtu, BlockChain bc) {
         // des transactions du bloc, si tel est le cas, on passe
         // au bloc suivant
         if(next->suiv == NULL) {
-            next = currentBlock->suiv->liste;
+            // si on a atteint le premier bloc, on sort
+            if(currentBlock->suiv == NULL) {
+                historyBacktrack = 0;
+            } else {
+                next = currentBlock->suiv->liste;
+            }
         }
     }
 }
