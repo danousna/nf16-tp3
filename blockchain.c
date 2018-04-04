@@ -1,5 +1,16 @@
 #include "blockchain.h"
 
+BlockChain getBlockChain()
+{
+    static BlockChain bc;
+
+    if(bc == NULL) {
+        bc = ajouterBlock(bc);
+    }
+
+    return bc;
+}
+
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));
 
@@ -68,7 +79,7 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
         return;
     }
 
-    // ajout de la nouvelle traction en tête de liste
+    // ajout de la nouvelle transaction en tête de liste
     bc->liste = ajouterTransaction(idEtu, montant, desc, bc->liste);
 }
 

@@ -22,6 +22,8 @@ typedef struct Block
 
 typedef T_Block* BlockChain;
 
+BlockChain getBlockChain();
+
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction);
 
 BlockChain ajouterBlock(BlockChain bc);

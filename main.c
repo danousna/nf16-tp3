@@ -5,17 +5,6 @@
 #include "blockchain.h"
 #include "interface.h"
 
-BlockChain getBlockChain()
-{
-    static BlockChain bc;
-
-    if(bc == NULL) {
-        bc = ajouterBlock(bc);
-    }
-
-    return bc;
-}
-
 int main()
 {
     // Création de la blockchain.
@@ -28,8 +17,6 @@ int main()
     crediter(1, 10, "C'est fini", bc);
 
     afficherMenu();
-
-    //consulter(1, bc);
     
     return 0;
 }
