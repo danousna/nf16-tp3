@@ -137,7 +137,7 @@ void afficherTransaction(T_Transaction *transaction, T_Block *block) {
     printf(" - montant : %f EATCoin\n", transaction->montant);
     printf(" - bloc : #%i\n", block->id);
     printf(" - description :\n");
-    printf("%s\n", transaction->desc);
+    printf("   \"%s\"\n", transaction->desc);
 }
 
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc)
