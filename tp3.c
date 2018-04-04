@@ -85,7 +85,15 @@ void consulter(int idEtu, BlockChain bc)
 
 }
 
-int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc)
-{
+void afficherTransaction(T_Transaction *transaction, T_Block *block) {
+    printf("Transaction#%i\n", transaction->id);
+    printf(" - montant : %f EATCoin\n", transaction->montant);
+    printf(" - bloc : #%i\n", block->id);
+    printf(" - description :\n");
+    printf("%s\n", transaction->desc);
+}
+
+
+int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
 
 }
