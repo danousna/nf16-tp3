@@ -20,7 +20,6 @@ BlockChain ajouterBlock(BlockChain bc)
     T_Transaction *newL = malloc(sizeof(T_Transaction));
 
     // bc pointe vers le dernier block.
-    newB->id = bc->id + 1;
     if (bc == NULL) {
         newB->id = 0;
     } else {
@@ -107,8 +106,8 @@ void consulter(int idEtu, BlockChain bc) {
     T_Block *currentBlock = bc;
 
     printf("Etudiant #%i : \n", idEtu);
-    printf(" - solde : %f EATCoin", soldeEtudiant(idEtu, bc));
-    printf("--- affichage des %i dernières transations ---", historyBacktrack);
+    printf(" - solde : %f EATCoin\n", soldeEtudiant(idEtu, bc));
+    printf("--- affichage des %i dernières transations ---\n", historyBacktrack);
 
     T_Transaction *next = bc->liste;
     while (historyBacktrack > 0) {
