@@ -65,9 +65,18 @@ float soldeEtudiant(int idEtu, BlockChain bc)
     return solde;
 }
 
-void crediter(int idEtu, float montant, char *desc, BlockChain bc)
-{
+void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
+    T_Transaction *transaction = malloc(sizeof(T_Transaction));
 
+    // empilage de la transaction
+    transaction->suiv = bc->liste;
+    // init transation
+    transaction->id = bc->liste->id + 1;
+    transaction->montant = montant;
+    strcpy(transaction->desc, desc);
+
+    // ajout de la nouvelle traction en tête de liste
+    bc->liste = transaction;
 }
 
 int payer(int idEtu, float montant, char *desc, BlockChain bc)
