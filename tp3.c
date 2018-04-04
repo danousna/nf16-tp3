@@ -80,9 +80,39 @@ int payer(int idEtu, float montant, char *desc, BlockChain bc)
 
 }
 
-void consulter(int idEtu, BlockChain bc)
-{
+void consulter(int idEtu, BlockChain bc) {
+    /**
+     * Profondeur de recherche des transactions.
+     * Attention, il faudra remonter dans les blocs
+     * précédents si le bloc courant ne contient
+     * pas assez de transactions.
+     *
+     * Il est aussi possible qu'un étudiant n'ai pas `historyBacktrack`
+     * transactions, dans ce cas (pire cas) on devra remonter toute
+     * la blockchain jusqu'au premier block.
+     */
+    int historyBacktrack = 5;
+    T_Block *currentBlock = bc;
 
+    printf("Etudiant #%i : \n", idEtu);
+    printf(" - solde : %f EATCoin", soldeEtudiant(idEtu, bc));
+    printf("--- affichage des %i dernières transations ---", historyBacktrack);
+
+    T_Transaction *next = bc->liste;
+    while (historyBacktrack > 0) {
+        if (next->id == idEtu) {
+            afficherTransaction(next, currentBlock);
+            historyBacktrack--;
+        }
+        next = next->suiv;
+
+        // vérification si nous sommes arrivés à la fin
+        // des transactions du bloc, si tel est le cas, on passe
+        // au bloc suivant
+        if(next->suiv == NULL) {
+            next = currentBlock->suiv->liste;
+        }
+    }
 }
 
 void afficherTransaction(T_Transaction *transaction, T_Block *block) {
