@@ -124,6 +124,8 @@ void consulter(int idEtu, BlockChain bc) {
             }
         }
     }
+    printf("--- fin de l'affichage ---\n");
+
 }
 
 void afficherTransaction(T_Transaction *transaction, T_Block *block) {
