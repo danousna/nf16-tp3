@@ -69,7 +69,7 @@ float soldeEtudiant(int idEtu, BlockChain bc)
 
 void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant <= 0) {
-        printf("Le montant à créditer : %f doit être >= 0.");
+        printf("Le montant à créditer : %f doit être >= 0.", montant);
         return;
     }
 
