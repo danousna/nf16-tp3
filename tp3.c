@@ -1,13 +1,15 @@
+#include <stdio.h>
 #include "tp3.h"
 
-T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction)
-{
+T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));
 
+    // empilage de la transaction
+    new->suiv = listeTransaction;
+    // init transation
     new->id = idEtu;
     new->montant = montant;
     strcpy(new->desc, desc);
-    new->suiv = listeTransaction;
 
     return new;
 }
