@@ -14,8 +14,7 @@ T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transa
     return new;
 }
 
-BlockChain ajouterBlock(BlockChain bc)
-{
+BlockChain ajouterBlock(BlockChain bc) {
     T_Block *newB = malloc(sizeof(T_Block));
     T_Transaction *newL = malloc(sizeof(T_Transaction));
 
@@ -46,23 +45,20 @@ float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
     return total;
 }
 
-float soldeEtudiant(int idEtu, BlockChain bc)
-{
-    T_Block *x = bc;
+float soldeEtudiant(int idEtu, BlockChain bc) {
+    T_Block *currentBlock = bc;
     float solde = 0;
 
-    while (x->suiv != NULL)
-    {
-        T_Transaction *transaction = x->liste;
-        while(transaction != NULL)
-        {
+    do {
+        T_Transaction *transaction = currentBlock->liste;
+        while (transaction != NULL) {
             if (transaction->id == idEtu)
                 solde += transaction->montant;
-            
+
             transaction = transaction->suiv;
         }
-        x = x->suiv;
-    }
+        currentBlock = currentBlock->suiv;
+    } while (currentBlock != NULL);
 
     return solde;
 }
@@ -77,17 +73,15 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
     bc->liste = ajouterTransaction(idEtu, montant, desc, bc->liste);
 }
 
-int payer(int idEtu, float montant, char *desc, BlockChain bc)
-{
+int payer(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant < 0)
         return 0;
 
     if (soldeEtudiant(idEtu, bc) < montant)
         return 0;
-    else
-    {
+    else {
         // On débite de - le montant du solde de l'étudiant.
-        ajouterTransaction(idEtu, -montant, desc, bc->liste); 
+        ajouterTransaction(idEtu, -montant, desc, bc->liste);
         return 1;
     }
 }
@@ -121,9 +115,9 @@ void consulter(int idEtu, BlockChain bc) {
         // vérification si nous sommes arrivés à la fin
         // des transactions du bloc, si tel est le cas, on passe
         // au bloc suivant
-        if(next->suiv == NULL) {
+        if (next->suiv == NULL) {
             // si on a atteint le premier bloc, on sort
-            if(currentBlock->suiv == NULL) {
+            if (currentBlock->suiv == NULL) {
                 historyBacktrack = 0;
             } else {
                 next = currentBlock->suiv->liste;
@@ -140,15 +134,11 @@ void afficherTransaction(T_Transaction *transaction, T_Block *block) {
     printf("   \"%s\"\n", transaction->desc);
 }
 
-int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc)
-{
-    if (montant < 0)
-    {
+int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
+    if (montant < 0) {
         printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
         return 0;
-    }
-    else
-    {
+    } else {
         payer(idSource, montant, desc, bc);
         crediter(idDestination, montant, desc, bc);
         return 1;
