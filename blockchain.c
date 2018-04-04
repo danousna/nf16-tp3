@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "tp3.h"
+#include "blockchain.h"
 
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));

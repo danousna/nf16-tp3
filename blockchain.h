@@ -1,6 +1,7 @@
-#ifndef TP3_H
-#define TP3_H
+#ifndef BLOCKCHAIN_H
+#define BLOCKCHAIN_H
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
