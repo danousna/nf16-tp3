@@ -81,7 +81,13 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
 
 int payer(int idEtu, float montant, char *desc, BlockChain bc)
 {
-
+    if (soldeEtudiant(idEtu, bc) < montant)
+        return 0;
+    else
+    {
+        ajouterTransaction(idEtu, montant, desc, bc->liste); 
+        return 1;
+    }
 }
 
 void consulter(int idEtu, BlockChain bc)
