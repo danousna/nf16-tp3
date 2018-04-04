@@ -28,11 +28,8 @@ BlockChain ajouterBlock(BlockChain bc)
     newB->liste = newL;
     newB->suiv = bc;
 
-    return &newB;
+    return newB;
 }
-
-float totalTransactionEtudiantBlock(int idEtu, T_Block b)
-{
 
 float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
     float total = 0;
@@ -49,7 +46,23 @@ float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
 
 float soldeEtudiant(int idEtu, BlockChain bc)
 {
+    T_Block x = bc;
+    float solde = 0;
 
+    while (x->suiv != NULL)
+    {
+        T_Transaction transaction = x->liste;
+        while(transaction != NULL)
+        {
+            if (transaction->id == idEtu)
+                solde += transaction->montant;
+            
+            transaction = transaction->suiv;
+        }
+        x = x->suiv;
+    }
+
+    return solde;
 }
 
 void crediter(int idEtu, float montant, char *desc, BlockChain bc)
