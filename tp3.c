@@ -22,12 +22,13 @@ BlockChain ajouterBlock(BlockChain bc)
     // bc pointe vers le dernier block.
     if (bc == NULL) {
         newB->id = 0;
+        newB->suiv = NULL;
     } else {
         newB->id = bc->id + 1;
+        newB->suiv = bc;
     }
 
     newB->liste = newL;
-    newB->suiv = bc;
 
     return newB;
 }
