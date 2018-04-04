@@ -46,12 +46,12 @@ float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
 
 float soldeEtudiant(int idEtu, BlockChain bc)
 {
-    T_Block x = bc;
+    T_Block *x = bc;
     float solde = 0;
 
     while (x->suiv != NULL)
     {
-        T_Transaction transaction = x->liste;
+        T_Transaction *transaction = x->liste;
         while(transaction != NULL)
         {
             if (transaction->id == idEtu)
