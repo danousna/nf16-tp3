@@ -1,5 +1,7 @@
 #include "interface.h"
 
+extern BlockChain bc;
+
 void afficherMenu()
 {
     int choix = 0;
@@ -8,7 +10,7 @@ void afficherMenu()
     printf("1. Afficher la liste des blocs de la BlockChain.\n");
     printf("2. Afficher toutes les transactions d'un bloc.\n");
     printf("3. Afficher toutes les transactions du jour pour un étudiant.\n");
-    printf("4. Afficher l'historique pour un étudiant.\n");
+    printf("4. Afficher l'historique d'un étudiant.\n");
     printf("5. Créditer un compte.\n");
     printf("6. Payer un repas.\n");
     printf("7. Transférer des EATCoins entre deux étudiants.\n");
@@ -21,37 +23,44 @@ void afficherMenu()
         printf("Choix : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
-    } while(choix < 1 || choix > 10);
+    } while (choix < 1 || choix > 10);
 
     printf("\n");
 
     switch (choix)
     {
         case 1:
+            printf("=== Affichage des blocks de la blockchain ===\n\n");
             afficherBlocks();
             printf("\n");
             break;
         case 2:
+            printf("=== Affichage des transactions d'un Block ===\n\n");
             afficherTransactionsBlock();
             printf("\n");
             break;
         case 3:
+            printf("=== Affichage des transactions du jour d'un étudiant ===\n\n");
             afficherTransactionsEtuJour();
             printf("\n");
             break;
         case 4:
+            printf("=== Affichage de l'historique d'un étudiant ===\n\n");
             afficherHistoriqueEtu();
             printf("\n");
             break;
         case 5:
+            printf("=== Créditer un compte ===\n\n");
             crediterCompte();
             printf("\n");
             break;
         case 6:
+            printf("=== Payer un repas ===\n\n");
             payerRepas();
             printf("\n");
             break;
         case 7:
+            printf("=== Transfert de EATCoins ===\n\n");
             transfertEtu();
             printf("\n");
             break;
@@ -77,8 +86,6 @@ void afficherBlocks()
 {
     T_Block *currentBlock = bc;
 
-    printf("=== Affichage des blocks de la blockchain ===\n\n");
-
     do {
         printf("Block #%d\n", currentBlock->id);
         currentBlock = currentBlock->suiv;
@@ -87,27 +94,135 @@ void afficherBlocks()
 
 void afficherTransactionsBlock()
 {
+    int choix = 0;
 
+    printf("Tous les blocks :\n\n");
+    afficherBlocks();
+    printf("\n");
+
+    do
+    {   
+        printf("Choix : ");
+        scanf("%d", &choix);
+        while ((getchar()) != '\n');
+    } while (choix < 0 || choix > bc->id);
+
+    printf("\n");
+    printf("Affichage des transactions du Block #%d :\n", choix);
+
+    T_Block *block = getBlock(choix, bc);
+
+    T_Transaction *transaction = block->liste;
+
+    do {
+        afficherTransaction(transaction);
+        transaction = transaction->suiv;
+    } while (transaction != NULL);    
 }
 
 void afficherTransactionsEtuJour()
 {
+    int choix = 0;
 
+    printf("Le Block du jour : %d\n", bc->id);
+
+    do
+    {   
+        printf("ID de l'étudiant : ");
+        scanf("%d", &choix);
+        while ((getchar()) != '\n');
+    } while (choix < 0 || choix > 10000); // Pas propre.
+
+    printf("\n");
+    printf("Affichage des transactions de l'étudiant %d pour le Block #%d :\n", choix, bc->id);
+
+    T_Transaction *transaction = bc->liste;
+
+    do {
+        if (transaction->id == choix)
+            afficherTransaction(transaction);
+        transaction = transaction->suiv;
+    } while (transaction != NULL); 
 }
 
 void afficherHistoriqueEtu()
 {
+    int choix = 0;
 
+    do
+    {   
+        printf("ID de l'étudiant : ");
+        scanf("%d", &choix);
+        while ((getchar()) != '\n');
+    } while (choix < 0 || choix > 10000); // Pas propre.
+
+    printf("\n");
+    
+    consulter(choix, bc);
 }
 
 void crediterCompte()
 {
+    int id = 0;
+    float montant = 0;
+    char desc[255];
 
+    do
+    {   
+        printf("ID de l'étudiant : ");
+        scanf("%d", &id);
+        while ((getchar()) != '\n');
+    } while (id < 0 || id > 10000); // Pas propre.
+
+    printf("\n");
+
+    do
+    {   
+        printf("Montant à créditer : ");
+        scanf("%f", &montant);
+        while ((getchar()) != '\n');
+    } while (montant < 0);
+
+    printf("\n");
+
+    printf("Description : \n");
+    fgets(desc, 255, stdin);
+
+    crediter(id, montant, desc, bc);
+
+    afficherTransaction(bc->liste);
 }
 
 void payerRepas()
 {
+    int id = 0;
+    float montant = 0;
+    char desc[255];
 
+    do
+    {   
+        printf("ID de l'étudiant : ");
+        scanf("%d", &id);
+        while ((getchar()) != '\n');
+    } while (id < 0 || id > 10000); // Pas propre.
+
+    printf("\n");
+
+    do
+    {   
+        printf("Montant à payer : ");
+        scanf("%f", &montant);
+        while ((getchar()) != '\n');
+    } while (montant < 0);
+
+    printf("\n");
+
+    printf("Description : \n");
+    fgets(desc, 255, stdin);
+
+    payer(id, montant, desc, bc);
+
+    afficherTransaction(bc->liste);
 }
 
 void transfertEtu()

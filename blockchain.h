@@ -22,8 +22,6 @@ typedef struct Block
 
 typedef T_Block* BlockChain;
 
-BlockChain getBlockChain();
-
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction);
 
 BlockChain ajouterBlock(BlockChain bc);
@@ -36,10 +34,12 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc);
 
 int payer(int idEtu, float montant, char *desc, BlockChain bc);
 
-void afficherTransaction(T_Transaction *transaction, BlockChain bc);
-
 void consulter(int idEtu, BlockChain bc);
 
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc);
+
+void afficherTransaction(T_Transaction *transaction);
+
+T_Block *getBlock(int id, BlockChain bc);
 
 #endif

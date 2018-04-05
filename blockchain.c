@@ -1,15 +1,6 @@
 #include "blockchain.h"
 
-BlockChain getBlockChain()
-{
-    static BlockChain bc;
-
-    if(bc == NULL) {
-        bc = ajouterBlock(bc);
-    }
-
-    return bc;
-}
+BlockChain bc;
 
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));
@@ -32,9 +23,11 @@ BlockChain ajouterBlock(BlockChain bc) {
     if (bc == NULL) {
         newB->id = 0;
         newB->suiv = NULL;
+        printf("Block #%d -> ", newB->id);
     } else {
         newB->id = bc->id + 1;
         newB->suiv = bc;
+        printf("Block #%d -> ", newB->id);
     }
 
     newB->liste = newL;
@@ -117,7 +110,7 @@ void consulter(int idEtu, BlockChain bc) {
     T_Transaction *next = bc->liste;
     while (historyBacktrack > 0) {
         if (next->id == idEtu) {
-            afficherTransaction(next, currentBlock);
+            afficherTransaction(next);
             historyBacktrack--;
         }
         next = next->suiv;
@@ -138,14 +131,6 @@ void consulter(int idEtu, BlockChain bc) {
 
 }
 
-void afficherTransaction(T_Transaction *transaction, T_Block *block) {
-    printf("Transaction#%i\n", transaction->id);
-    printf(" - montant : %f EATCoin\n", transaction->montant);
-    printf(" - bloc : #%i\n", block->id);
-    printf(" - description :\n");
-    printf("   \"%s\"\n", transaction->desc);
-}
-
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
     if (montant < 0) {
         printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
@@ -155,4 +140,24 @@ int transfert(int idSource, int idDestination, float montant, char *desc, BlockC
         crediter(idDestination, montant, desc, bc);
         return 1;
     }
+}
+
+void afficherTransaction(T_Transaction *transaction) {
+    printf("Transaction#%i\n", transaction->id);
+    printf(" - montant : %f EATCoin\n", transaction->montant);
+    //printf(" - bloc : #%i\n", block->id);
+    printf(" - description :\n");
+    printf("   \"%s\"\n", transaction->desc);
+}
+
+T_Block *getBlock(int id, BlockChain bc) {
+    T_Block *currentBlock = bc;
+
+    do {
+        if (currentBlock->id == id)
+            return currentBlock;
+        currentBlock = currentBlock->suiv;
+    } while (currentBlock != NULL);
+
+    return NULL;
 }
