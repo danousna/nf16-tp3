@@ -10,11 +10,15 @@ int main()
     // Création de la blockchain.
     BlockChain bc = getBlockChain();
 
-    // Seed de la blockchain.
+    // Seed de la blockchain.  
+    bc = ajouterBlock(bc);
+    bc = ajouterBlock(bc);
+    bc = ajouterBlock(bc);
+
     crediter(1, 10, "Salut", bc);
     crediter(1, 10, "C'est la richesse !", bc);
-    crediter(1, 10, "Encore plus", bc);
-    crediter(1, 10, "C'est fini", bc);
+    crediter(1, 10, "Encore plus", bc->suiv);
+    crediter(1, 10, "C'est fini", bc->suiv->suiv);
 
     afficherMenu();
     

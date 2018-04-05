@@ -75,8 +75,6 @@ void afficherMenu()
 
 void afficherBlocks()
 {
-    BlockChain bc = getBlockChain();
-
     T_Block *currentBlock = bc;
 
     printf("=== Affichage des blocks de la blockchain ===\n\n");
