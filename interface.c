@@ -9,7 +9,7 @@ void afficherMenu()
     printf("\n====== Bienvenue sur EATCoins ======\n\nEntrez le numéro correspondant à la fonction :\n\n");
     printf("1. Afficher la liste des blocs de la BlockChain.\n");
     printf("2. Afficher toutes les transactions d'un bloc.\n");
-    printf("3. Afficher toutes les transactions du jour pour un étudiant.\n");
+    printf("3. Afficher toutes les transactions du jour d'un étudiant.\n");
     printf("4. Afficher l'historique d'un étudiant.\n");
     printf("5. Créditer un compte.\n");
     printf("6. Payer un repas.\n");
@@ -33,36 +33,43 @@ void afficherMenu()
             printf("=== Affichage des blocks de la blockchain ===\n\n");
             afficherBlocks();
             printf("\n");
+            boucle();
             break;
         case 2:
             printf("=== Affichage des transactions d'un Block ===\n\n");
             afficherTransactionsBlock();
             printf("\n");
+            boucle();
             break;
         case 3:
             printf("=== Affichage des transactions du jour d'un étudiant ===\n\n");
             afficherTransactionsEtuJour();
             printf("\n");
+            boucle();
             break;
         case 4:
             printf("=== Affichage de l'historique d'un étudiant ===\n\n");
             afficherHistoriqueEtu();
             printf("\n");
+            boucle();
             break;
         case 5:
             printf("=== Créditer un compte ===\n\n");
             crediterCompte();
             printf("\n");
+            boucle();
             break;
         case 6:
             printf("=== Payer un repas ===\n\n");
             payerRepas();
             printf("\n");
+            boucle();
             break;
         case 7:
             printf("=== Transfert de EATCoins ===\n\n");
             transfertEtu();
             printf("\n");
+            boucle();
             break;
         case 8:
             exit(0);
@@ -80,6 +87,20 @@ void afficherMenu()
             printf("\n");
             break;
     }
+}
+
+void boucle()
+{
+    char choix;
+
+    printf("Quitter ? (y/n) : ");
+    scanf("%c", &choix);
+    while ((getchar()) != '\n');
+
+    if (choix == 'n')
+        afficherMenu();
+    else
+        exit(0);
 }
 
 void afficherBlocks()
@@ -220,12 +241,46 @@ void payerRepas()
     printf("Description : \n");
     fgets(desc, 255, stdin);
 
-    payer(id, montant, desc, bc);
-
-    afficherTransaction(bc->liste);
+    if (payer(id, montant, desc, bc))
+        afficherTransaction(bc->liste);
 }
 
 void transfertEtu()
 {
+    int id1 = 0, id2 = 0;
+    float montant = 0;
+    char desc[255];
 
+    do
+    {   
+        printf("ID de l'étudiant 1 : ");
+        scanf("%d", &id1);
+        while ((getchar()) != '\n');
+    } while (id1 < 0 || id1 > 10000); // Pas propre.
+
+    printf("\n");
+
+    do
+    {   
+        printf("ID de l'étudiant 2 : ");
+        scanf("%d", &id2);
+        while ((getchar()) != '\n');
+    } while (id2 < 0 || id2 > 10000); // Pas propre.
+
+    printf("\n");
+
+    do
+    {   
+        printf("Montant à transférer : ");
+        scanf("%f", &montant);
+        while ((getchar()) != '\n');
+    } while (montant < 0);
+
+    printf("\n");
+
+    printf("Description : \n");
+    fgets(desc, 255, stdin);
+
+    if (transfert(id1, id2, montant, desc, bc))
+        afficherTransaction(bc->liste);
 }

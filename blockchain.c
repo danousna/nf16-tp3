@@ -84,7 +84,7 @@ int payer(int idEtu, float montant, char *desc, BlockChain bc) {
         return 0;
     else {
         // On débite de - le montant du solde de l'étudiant.
-        ajouterTransaction(idEtu, -montant, desc, bc->liste);
+        bc->liste = ajouterTransaction(idEtu, -montant, desc, bc->liste);
         return 1;
     }
 }

@@ -8,6 +8,8 @@
 
 void afficherMenu();
 
+void boucle();
+
 void afficherBlocks();
 
 void afficherTransactionsBlock();
