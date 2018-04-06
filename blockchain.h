@@ -42,4 +42,6 @@ void afficherTransaction(T_Transaction *transaction);
 
 T_Block *getBlock(int id, BlockChain bc);
 
+void liberer();
+
 #endif

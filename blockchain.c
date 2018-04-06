@@ -161,3 +161,34 @@ T_Block *getBlock(int id, BlockChain bc) {
 
     return NULL;
 }
+
+void liberer()
+{
+    BlockChain bc;   
+
+    printf("Libération de l'espace mémoire...\n");
+
+    while (bc != NULL)
+    {
+        T_Block *block_suiv = bc->suiv;
+
+        while (bc->liste != NULL)
+        {
+            T_Transaction *transaction = bc->liste;
+            T_Transaction *transaction_suiv = bc->liste->suiv;
+
+            free(&transaction->id);
+            free(&transaction->montant);
+            free(&transaction->desc);
+            free(transaction);
+            free(bc->liste);
+
+            transaction = transaction_suiv;
+        }
+
+        free(&bc->id);
+        free(bc);
+
+        bc = block_suiv;
+    }
+}

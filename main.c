@@ -7,6 +7,8 @@
 
 int main()
 {
+    atexit(liberer );
+
     extern BlockChain bc;
 
     // Seed de la blockchain.  

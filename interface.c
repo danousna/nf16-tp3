@@ -1,6 +1,6 @@
 #include "interface.h"
 
-extern BlockChain bc;
+BlockChain bc;
 
 void afficherMenu()
 {
