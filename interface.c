@@ -75,12 +75,16 @@ void afficherMenu()
             exit(0);
             break;
         case 9:
-            // Export
+            printf("=== Exportation des transactions ===\n\n");
+            exporterTransactions();
             printf("\n");
+            boucle();
             break;
         case 10:
-            // Import
+            printf("=== Importation de transactions ===\n\n");
+            importerTransactions();
             printf("\n");
+            boucle();
             break;
         default:
             printf("Erreur : choix non reconnu.\n");
@@ -283,4 +287,25 @@ void transfertEtu()
 
     if (transfert(id1, id2, montant, desc, bc))
         afficherTransaction(bc->liste);
+}
+
+void exporterTransactions()
+{
+    char nom[100];
+    char *extension = ".txt";
+    FILE *fp;
+
+    printf("Nom du fichier : \n");
+    fgets(nom, 96, stdin);
+
+    strcat(nom, extension);
+
+    fp = fopen(nom, "w+");
+    fprintf(fp, "test de l'exportation...\nHey");
+    fclose(fp);
+}
+
+void importerTransactions()
+{
+
 }
