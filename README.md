@@ -1,5 +1,9 @@
 ﻿# NF16 - TP3 - BlockChain
 
+### Todo :
+- complexité des fonctions demandées (Léo)
+- export/import fichiers (Léo)
+
 Le but de ce TP est d'implémenter une BlockChain simplifiée. Une blockchain permet le stockage d'informations (pas forcément financières) de manière décentralisée. C'est une base de données distribuée. L'intérêt de cette technologie est qu'elle est pratiquement impossible à hacker.
 
 ## Choix d'architecture
