@@ -5,33 +5,35 @@
 #ifndef NF16_TP3_TESTS_H
 #define NF16_TP3_TESTS_H
 
+#include "blockchain.h"
+
 void initTests();
 
-int testAjoutPremiereTransaction();
-int testAjoutAutreTransactions();
+int testAjoutPremiereTransaction(BlockChain blockChain);
+int testAjoutAutreTransactions(BlockChain blockChain);
 
-int testBlockPremierId();
-int testBlockSuivantId();
-int testBlockTransactionVide();
+int testBlockPremierId(BlockChain blockChain);
+int testBlockSuivantId(BlockChain blockChain);
+int testBlockTransactionVide(BlockChain blockChain);
 
-int testSommeCoinsJourneeEtudiantPasDeTransaction();
-int testSommeCoinsJourneeEtudiant();
+int testSommeCoinsJourneeEtudiantPasDeTransaction(BlockChain blockChain);
+int testSommeCoinsJourneeEtudiant(BlockChain blockChain);
 
-int testCalculSoldeTotalNul();
-int testCalculSoldeTotalNonNul();
+int testCalculSoldeTotalNul(BlockChain blockChain);
+int testCalculSoldeTotalNonNul(BlockChain blockChain);
 
-int testCreditCompteVerifTransactionTeteBlock();
+int testCreditCompteVerifTransactionTeteBlock(BlockChain blockChain);
 
-int testPayerRepasPasAssez();
-int testPayerRepasAssezArgentNouvelleTransaction();
+int testPayerRepasPasAssez(BlockChain blockChain);
+int testPayerRepasAssezArgentNouvelleTransaction(BlockChain blockChain);
 
-int testHistoriqueMoins5Transactions();
-int testHistoriqueAucuneTransaction();
-int testHistoriquePlus5HistoriquesChronologique();
+int testHistoriqueMoins5Transactions(BlockChain blockChain);
+int testHistoriqueAucuneTransaction(BlockChain blockChain);
+int testHistoriquePlus5HistoriquesChronologique(BlockChain blockChain);
 
-int testTransfertPasAssezArgentOrgine();
-int testTransfertReussi2TransactionsAttendues();
+int testTransfertPasAssezArgentOrgine(BlockChain blockChain);
+int testTransfertReussi2TransactionsAttendues(BlockChain blockChain);
 
-int testImportExportImmuables();
+int testImportExportImmuables(BlockChain blockChain);
 
 #endif //NF16_TP3_TESTS_H

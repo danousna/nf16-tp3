@@ -3,79 +3,82 @@
 //
 
 #include "tests.h"
+#include "blockchain.h"
 
 void initTests() {
+    extern BlockChain bc;
+
+
 
 }
 
-int testAjoutPremiereTransaction() {
+int testAjoutPremiereTransaction(BlockChain blockChain) {
+}
+
+int testAjoutAutreTransactions(BlockChain blockChain) {
     return 0;
 }
 
-int testAjoutAutreTransactions() {
+int testBlockPremierId(BlockChain blockChain) {
     return 0;
 }
 
-int testBlockPremierId() {
+int testBlockSuivantId(BlockChain blockChain) {
     return 0;
 }
 
-int testBlockSuivantId() {
+int testBlockTransactionVide(BlockChain blockChain) {
     return 0;
 }
 
-int testBlockTransactionVide() {
+int testSommeCoinsJourneeEtudiantPasDeTransaction(BlockChain blockChain) {
     return 0;
 }
 
-int testSommeCoinsJourneeEtudiantPasDeTransaction() {
+int testSommeCoinsJourneeEtudiant(BlockChain blockChain) {
     return 0;
 }
 
-int testSommeCoinsJourneeEtudiant() {
+int testCalculSoldeTotalNul(BlockChain blockChain) {
     return 0;
 }
 
-int testCalculSoldeTotalNul() {
+int testCalculSoldeTotalNonNul(BlockChain blockChain) {
     return 0;
 }
 
-int testCalculSoldeTotalNonNul() {
+int testCreditCompteVerifTransactionTeteBlock(BlockChain blockChain) {
     return 0;
 }
 
-int testCreditCompteVerifTransactionTeteBlock() {
+int testPayerRepasPasAssez(BlockChain blockChain) {
     return 0;
 }
 
-int testPayerRepasPasAssez() {
+int testPayerRepasAssezArgentNouvelleTransaction(BlockChain blockChain) {
     return 0;
 }
 
-int testPayerRepasAssezArgentNouvelleTransaction() {
+int testHistoriqueMoins5Transactions(BlockChain blockChain) {
     return 0;
 }
 
-int testHistoriqueMoins5Transactions() {
+int testHistoriqueAucuneTransaction(BlockChain blockChain) {
     return 0;
 }
 
-int testHistoriqueAucuneTransaction() {
+int testHistoriquePlus5HistoriquesChronologique(BlockChain blockChain) {
     return 0;
 }
 
-int testHistoriquePlus5HistoriquesChronologique() {
+int testTransfertPasAssezArgentOrgine(BlockChain blockChain) {
     return 0;
 }
 
-int testTransfertPasAssezArgentOrgine() {
+int testTransfertReussi2TransactionsAttendues(BlockChain blockChain) {
     return 0;
 }
 
-int testTransfertReussi2TransactionsAttendues() {
-    return 0;
-}
-
-int testImportExportImmuables() {
+int testImportExportImmuables(BlockChain blockChain) {
     return 0;
 }
