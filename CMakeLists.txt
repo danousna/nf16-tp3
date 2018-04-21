@@ -3,4 +3,4 @@ project(nf16-tp3 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(nf16-tp3 main.c interface.h interface.c blockchain.h blockchain.c)
+add_executable(nf16-tp3 main.c tests.h tests.c interface.h interface.c blockchain.h blockchain.c)
