@@ -1,4 +1,5 @@
 #include "interface.h"
+#include <limits.h>
 
 BlockChain bc;
 
@@ -156,7 +157,7 @@ void afficherTransactionsEtuJour()
         printf("ID de l'étudiant : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
-    } while (choix < 0 || choix > 10000); // Pas propre.
+    } while (choix < 0 || choix > INT_MAX);
 
     printf("\n");
     printf("Affichage des transactions de l'étudiant %d pour le Block #%d :\n", choix, bc->id);
@@ -179,7 +180,7 @@ void afficherHistoriqueEtu()
         printf("ID de l'étudiant : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
-    } while (choix < 0 || choix > 10000); // Pas propre.
+    } while (choix < 0 || choix > INT_MAX);
 
     printf("\n");
     
@@ -197,7 +198,7 @@ void crediterCompte()
         printf("ID de l'étudiant : ");
         scanf("%d", &id);
         while ((getchar()) != '\n');
-    } while (id < 0 || id > 10000); // Pas propre.
+    } while (id < 0 || id > INT_MAX);
 
     printf("\n");
 
@@ -229,7 +230,7 @@ void payerRepas()
         printf("ID de l'étudiant : ");
         scanf("%d", &id);
         while ((getchar()) != '\n');
-    } while (id < 0 || id > 10000); // Pas propre.
+    } while (id < 0 || id > INT_MAX);
 
     printf("\n");
 
@@ -260,7 +261,7 @@ void transfertEtu()
         printf("ID de l'étudiant 1 : ");
         scanf("%d", &id1);
         while ((getchar()) != '\n');
-    } while (id1 < 0 || id1 > 10000); // Pas propre.
+    } while (id1 < 0 || id1 > INT_MAX);
 
     printf("\n");
 
@@ -269,7 +270,7 @@ void transfertEtu()
         printf("ID de l'étudiant 2 : ");
         scanf("%d", &id2);
         while ((getchar()) != '\n');
-    } while (id2 < 0 || id2 > 10000); // Pas propre.
+    } while (id2 < 0 || id2 > INT_MAX);
 
     printf("\n");
 
