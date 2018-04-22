@@ -26,7 +26,7 @@ T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transa
 
 BlockChain ajouterBlock(BlockChain bc);
 
-float totalTransactionEtudiantBlock(int idEtu, T_Block b);
+float totalTransactionEtudiantBlock(int idEtu, T_Block * b);
 
 float soldeEtudiant(int idEtu, BlockChain bc);
 

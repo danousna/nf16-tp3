@@ -2,6 +2,7 @@
 
 ### Todo :
 - complexité des fonctions demandées (Léo)
+- expliquer la modification du prototype de la fonction `float totalTransactionEtudiantBlock(int idEtu, T_Block * b)` (pointeur T_Block au lieu T_Block)
 - export/import fichiers (Léo)
 
 Le but de ce TP est d'implémenter une BlockChain simplifiée. Une blockchain permet le stockage d'informations (pas forcément financières) de manière décentralisée. C'est une base de données distribuée. L'intérêt de cette technologie est qu'elle est pratiquement impossible à hacker.

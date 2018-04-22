@@ -99,12 +99,33 @@ int testBlockSuivantId() {
     return  blockChain->id == 4;
 }
 
-int testSommeCoinsJourneeEtudiantPasDeTransaction(BlockChain blockChain) {
-    return 0;
+int testSommeCoinsJourneeEtudiantPasDeTransaction() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    assert(totalTransactionEtudiantBlock(0, blockChain) == 0);
+    assert(totalTransactionEtudiantBlock(3, blockChain) == 0);
+
+    return 1;
 }
 
-int testSommeCoinsJourneeEtudiant(BlockChain blockChain) {
-    return 0;
+int testSommeCoinsJourneeEtudiant() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    crediter(3, 1000, "Init j1", blockChain);
+
+    // on passe au jour suivant
+    blockChain = ajouterBlock(blockChain);
+
+    crediter(0, 1000, "Init j2", blockChain);
+    crediter(2, 1000, "Init j2", blockChain);
+    crediter(2, 1000, "Init j2", blockChain);
+    crediter(2, 1000, "Init j2", blockChain);
+
+    assert(totalTransactionEtudiantBlock(0, blockChain) == 1000);
+    assert(totalTransactionEtudiantBlock(3, blockChain) == 0);
+    assert(totalTransactionEtudiantBlock(2, blockChain) == 3000);
+
+    return 1;
 }
 
 int testCalculSoldeTotalNul(BlockChain blockChain) {

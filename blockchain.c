@@ -35,9 +35,9 @@ BlockChain ajouterBlock(BlockChain bc) {
     return newB;
 }
 
-float totalTransactionEtudiantBlock(int idEtu, T_Block b) {
+float totalTransactionEtudiantBlock(int idEtu, T_Block * b) {
     float total = 0;
-    T_Transaction *next = b.liste;
+    T_Transaction *next = b->liste;
 
     while (next != NULL) {
         if (next->id == idEtu) {
