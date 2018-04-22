@@ -9,15 +9,14 @@
 
 void initTests();
 
-int testAjoutPremiereTransaction(BlockChain blockChain);
-int testAjoutAutreTransactions(BlockChain blockChain);
+int testAjoutPremiereTransaction();
+int testAjoutAutreTransactions();
 
-int testBlockPremierId(BlockChain blockChain);
-int testBlockSuivantId(BlockChain blockChain);
-int testBlockTransactionVide(BlockChain blockChain);
+int testBlockPremierId();
+int testBlockSuivantId();
 
-int testSommeCoinsJourneeEtudiantPasDeTransaction(BlockChain blockChain);
-int testSommeCoinsJourneeEtudiant(BlockChain blockChain);
+int testSommeCoinsJourneeEtudiantPasDeTransaction();
+int testSommeCoinsJourneeEtudiant();
 
 int testCalculSoldeTotalNul(BlockChain blockChain);
 int testCalculSoldeTotalNonNul(BlockChain blockChain);
