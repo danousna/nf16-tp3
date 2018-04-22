@@ -128,46 +128,46 @@ int testSommeCoinsJourneeEtudiant() {
     return 1;
 }
 
-int testCalculSoldeTotalNul(BlockChain blockChain) {
+int testCalculSoldeTotalNul() {
     return 0;
 }
 
-int testCalculSoldeTotalNonNul(BlockChain blockChain) {
+int testCalculSoldeTotalNonNul() {
     return 0;
 }
 
-int testCreditCompteVerifTransactionTeteBlock(BlockChain blockChain) {
+int testCreditCompteVerifTransactionTeteBlock() {
     return 0;
 }
 
-int testPayerRepasPasAssez(BlockChain blockChain) {
+int testPayerRepasPasAssez() {
     return 0;
 }
 
-int testPayerRepasAssezArgentNouvelleTransaction(BlockChain blockChain) {
+int testPayerRepasAssezArgentNouvelleTransaction() {
     return 0;
 }
 
-int testHistoriqueMoins5Transactions(BlockChain blockChain) {
+int testHistoriqueMoins5Transactions() {
     return 0;
 }
 
-int testHistoriqueAucuneTransaction(BlockChain blockChain) {
+int testHistoriqueAucuneTransaction() {
     return 0;
 }
 
-int testHistoriquePlus5HistoriquesChronologique(BlockChain blockChain) {
+int testHistoriquePlus5HistoriquesChronologique() {
     return 0;
 }
 
-int testTransfertPasAssezArgentOrgine(BlockChain blockChain) {
+int testTransfertPasAssezArgentOrgine() {
     return 0;
 }
 
-int testTransfertReussi2TransactionsAttendues(BlockChain blockChain) {
+int testTransfertReussi2TransactionsAttendues() {
     return 0;
 }
 
-int testImportExportImmuables(BlockChain blockChain) {
+int testImportExportImmuables() {
     return 0;
 }

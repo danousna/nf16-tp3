@@ -18,21 +18,21 @@ int testBlockSuivantId();
 int testSommeCoinsJourneeEtudiantPasDeTransaction();
 int testSommeCoinsJourneeEtudiant();
 
-int testCalculSoldeTotalNul(BlockChain blockChain);
-int testCalculSoldeTotalNonNul(BlockChain blockChain);
+int testCalculSoldeTotalNul();
+int testCalculSoldeTotalNonNul();
 
-int testCreditCompteVerifTransactionTeteBlock(BlockChain blockChain);
+int testCreditCompteVerifTransactionTeteBlock();
 
-int testPayerRepasPasAssez(BlockChain blockChain);
-int testPayerRepasAssezArgentNouvelleTransaction(BlockChain blockChain);
+int testPayerRepasPasAssez();
+int testPayerRepasAssezArgentNouvelleTransaction();
 
-int testHistoriqueMoins5Transactions(BlockChain blockChain);
-int testHistoriqueAucuneTransaction(BlockChain blockChain);
-int testHistoriquePlus5HistoriquesChronologique(BlockChain blockChain);
+int testHistoriqueMoins5Transactions();
+int testHistoriqueAucuneTransaction();
+int testHistoriquePlus5HistoriquesChronologique();
 
-int testTransfertPasAssezArgentOrgine(BlockChain blockChain);
-int testTransfertReussi2TransactionsAttendues(BlockChain blockChain);
+int testTransfertPasAssezArgentOrgine();
+int testTransfertReussi2TransactionsAttendues();
 
-int testImportExportImmuables(BlockChain blockChain);
+int testImportExportImmuables();
 
 #endif //NF16_TP3_TESTS_H
