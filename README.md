@@ -1,7 +1,7 @@
 ﻿# NF16 - TP3 - BlockChain
 
 ### Todo :
-- complexité des fonctions demandées (Léo)
+- complexité des fonctions demandées (Léo) (Natan : j'ai un peu commencé).
 - expliquer la modification du prototype de la fonction `float totalTransactionEtudiantBlock(int idEtu, T_Block * b)` (pointeur T_Block au lieu T_Block)
 - export/import fichiers (Léo)
 
@@ -30,4 +30,48 @@ Mise à part les fonctions correspondant aux 10 options et la fonction d'afficha
 
 ## Complexité des fonctions
 
+Nous traiteront uniquement les fonctions relatives à la blockchain et non les fonctions d'interface.
 
+### ajouterTransaction();
+
+La fonction effectue des affectations simples. La complexité est donc : **O(1)**.
+
+### ajouterBlock();
+
+Pareil, **O(1)**.
+
+### totalTransactionEtudiantBlock();
+
+Soit `n` le nombre de transactions dans le block `b`, avec une boucle while, on aura donc une complexité **O(n)**.
+
+### soldeEtudiant();
+
+Soit `m` le nombre de blocks dans la blockchain `bc`, `n` le nombre de transactions dans ces blocks, la double boucle `while` nous donne une complexité **O(n\*m)**. 
+
+### crediter();
+
+**O(1)**.
+
+### payer();
+
+Dans la condition `if`, on utilise la fonction `soldeEtudiant()`, la complexité est donc : **O(n\*m)**.
+
+### consulter();
+
+
+
+### transfert();
+
+**O(n\*m)** à cause de la fonction `soldeEtudiant()`.
+
+### afficherTransaction();
+
+**O(1)**.
+
+### getBlock();
+
+**O(n)**.
+
+### liberer();
+
+**O(n\*m)**.
