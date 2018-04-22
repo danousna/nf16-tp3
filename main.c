@@ -4,6 +4,7 @@
 
 #include "blockchain.h"
 #include "interface.h"
+#include "tests.h"
 
 int main()
 {
@@ -11,8 +12,10 @@ int main()
 
     extern BlockChain bc;
 
+    initTests();
+
     // Seed de la blockchain.  
-    bc = ajouterBlock(bc);
+    bc = ajouterBlock(NULL); // premier block
     bc = ajouterBlock(bc);
     bc = ajouterBlock(bc);
 
