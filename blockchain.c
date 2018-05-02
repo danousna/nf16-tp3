@@ -18,7 +18,6 @@ T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transa
 
 BlockChain ajouterBlock(BlockChain bc) {
     T_Block *newB = malloc(sizeof(T_Block));
-    T_Transaction *newL = malloc(sizeof(T_Transaction));
 
     // bc pointe vers le dernier block.
     if (bc == NULL) {
@@ -31,7 +30,7 @@ BlockChain ajouterBlock(BlockChain bc) {
         printf("Block #%d -> ", newB->id);
     }
 
-    newB->liste = newL;
+    newB->liste = NULL;
 
     return newB;
 }
@@ -179,17 +178,19 @@ void liberer() {
     while (bc != NULL) {
         T_Block *block_suiv = bc->suiv;
 
-        while (bc->liste->suiv != NULL) {
-            printf("Libération de la transaction (%d, %f)\n", bc->liste->id, bc->liste->montant);
-            
-            T_Transaction *transaction_suiv = bc->liste->suiv;
+        if (bc->liste != NULL) {
+            while (bc->liste->suiv != NULL) {
+                printf("Libération de la transaction (%d, %f)\n", bc->liste->id, bc->liste->montant);
 
-            // free(bc->liste->id);
-            // free(bc->liste->montant);
-            // free(bc->liste->desc);
-            free(bc->liste);
+                T_Transaction *transaction_suiv = bc->liste->suiv;
 
-            bc->liste = transaction_suiv;
+                // free(bc->liste->id);
+                // free(bc->liste->montant);
+                // free(bc->liste->desc);
+                free(bc->liste);
+
+                bc->liste = transaction_suiv;
+            }
         }
 
         //free(&bc->id);

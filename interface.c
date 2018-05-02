@@ -133,10 +133,12 @@ void afficherTransactionsBlock() {
 
     T_Transaction *transaction = block->liste;
 
-    do {
+
+
+    while (transaction != NULL) {
         afficherTransaction(transaction);
         transaction = transaction->suiv;
-    } while (transaction != NULL);
+    }
 }
 
 void afficherTransactionsEtuJour() {
