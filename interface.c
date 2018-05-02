@@ -270,16 +270,13 @@ void transfertEtu() {
 }
 
 void exporterTransactions() {
-    char nom[100];
-    FILE *fp;
+    char fichier[100];
 
     printf("Nom du fichier : \n");
-    fgets(nom, 96, stdin);
+    fgets(fichier, 100, stdin);
 
-
-    fp = fopen(nom, "w+");
-    fprintf(fp, "test de l'exportation...\n");
-    fclose(fp);
+    if (exporter(fichier, bc))
+        printf("Exportation réussie.\n");
 }
 
 void importerTransactions() {

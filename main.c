@@ -8,9 +8,9 @@
 
 int main()
 {
-    initTests();
+    //initTests();
 
-    /*
+    
     atexit(liberer );
 
     extern BlockChain bc;
@@ -27,7 +27,7 @@ int main()
     crediter(1, 10, "Encore plus", bc->suiv);
 
     afficherMenu();
-     */
+     
 
     
     return 0;

@@ -198,6 +198,18 @@ void liberer() {
     }
 }
 
+void DatePlusDays( struct tm* date, int days )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime( &date_seconds ) ; ;
+}
+
 /**
  * Export du fichier, retourne 1 si succès, 0 sinon.
  *
@@ -222,7 +234,19 @@ int exporter(char *fileName, BlockChain blockChain) {
 
             while (transaction != NULL) {
 
-                fprintf(file, "%d/%d/%d;%d;%f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id, transaction->montant, transaction->desc);
+                // Rendre joli.
+                if (tm.tm_mday < 10)
+                    fprintf(file, "0%d/", tm.tm_mday);
+                else
+                    fprintf(file, "%d/", tm.tm_mday);
+
+                // Rendre joli.
+                if (tm.tm_mmon < 10)
+                    fprintf(file, "0%d/", tm.tm_mmon);
+                else
+                    fprintf(file, "%d/", tm.tm_mmon);
+                
+                fprintf(file, "%d/%d/%d;%d;%.2f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id, transaction->montant, transaction->desc);
 
                 transaction = transaction->suiv;
             }
@@ -236,16 +260,4 @@ int exporter(char *fileName, BlockChain blockChain) {
 
     fclose(file);
     return 1;
-}
-
-void DatePlusDays( struct tm* date, int days )
-{
-    const time_t ONE_DAY = 24 * 60 * 60 ;
-
-    // Seconds since start of epoch
-    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
-
-    // Update caller's date
-    // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime( &date_seconds ) ; ;
 }

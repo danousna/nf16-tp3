@@ -44,6 +44,8 @@ T_Block *getBlock(int id, BlockChain bc);
 
 void liberer();
 
+void DatePlusDays( struct tm* date, int days );
+
 int exporter(char *fileName, BlockChain blockChain);
 
 #endif
