@@ -23,6 +23,29 @@ void initTests() {
     printf("Calcul du solde étudiant... \n");
     assert(testSommeCoinsJourneeEtudiantPasDeTransaction());
     assert(testSommeCoinsJourneeEtudiant());
+
+    printf("Calcul du solde total... \n");
+    assert(testCalculSoldeTotalNonNul());
+    assert(testCalculSoldeTotalNul());
+
+    printf("Credit du compte... \n");
+    assert(testCreditCompteVerifTransactionTeteBlock());
+
+    printf("Payer un repas... \n");
+    assert(testPayerRepasAssezArgentNouvelleTransaction());
+    assert(testPayerRepasPasAssez());
+
+    printf("Affichage historique... \n");
+    assert(testHistoriqueAucuneTransaction());
+    assert(testHistoriqueMoins5Transactions());
+    assert(testHistoriquePlus5HistoriquesChronologique());
+
+    printf("Transfert argent... \n");
+    assert(testTransfertPasAssezArgentOrgine());
+    assert(testTransfertReussi2TransactionsAttendues());
+
+    printf("Import/Export... \n");
+    assert(testImportExportImmuables());
 }
 
 int testAjoutPremiereTransaction() {
@@ -96,7 +119,7 @@ int testBlockSuivantId() {
     blockChain = ajouterBlock(blockChain); // 3
     blockChain = ajouterBlock(blockChain); // 4
 
-    return  blockChain->id == 4;
+    return blockChain->id == 4;
 }
 
 int testSommeCoinsJourneeEtudiantPasDeTransaction() {
@@ -129,45 +152,73 @@ int testSommeCoinsJourneeEtudiant() {
 }
 
 int testCalculSoldeTotalNul() {
-    return 0;
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    // on passe au jour suivant
+    blockChain = ajouterBlock(blockChain);
+
+    assert(totalTransactionEtudiantBlock(10, blockChain) == 0);
+    return 1;
 }
 
 int testCalculSoldeTotalNonNul() {
-    return 0;
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    crediter(10, 100, "credit", blockChain);
+    crediter(11, 0, "credit", blockChain);
+    crediter(12, 100, "credit", blockChain);
+
+    assert(transfert(11, 10, 0.230, "transfert", blockChain) == 0);
+
+    assert(soldeEtudiant(10, blockChain) == 100);
+    assert(soldeEtudiant(11, blockChain) == 0);
+
+    // on passe au jour suivant
+    blockChain = ajouterBlock(blockChain);
+
+    transfert(10, 12, 20.230, "transfert", blockChain);
+
+
+
+    // TODO : check les décimales
+    // assert(soldeEtudiant(10, blockChain) == 79.770);
+    // assert(soldeEtudiant(11, blockChain) == 101.770);
+    // assert(soldeEtudiant(12, blockChain) == 120.460);
+    return 1;
 }
 
 int testCreditCompteVerifTransactionTeteBlock() {
-    return 0;
+    return 1;
 }
 
 int testPayerRepasPasAssez() {
-    return 0;
+    return 1;
 }
 
 int testPayerRepasAssezArgentNouvelleTransaction() {
-    return 0;
+    return 1;
 }
 
 int testHistoriqueMoins5Transactions() {
-    return 0;
+    return 1;
 }
 
 int testHistoriqueAucuneTransaction() {
-    return 0;
+    return 1;
 }
 
 int testHistoriquePlus5HistoriquesChronologique() {
-    return 0;
+    return 1;
 }
 
 int testTransfertPasAssezArgentOrgine() {
-    return 0;
+    return 1;
 }
 
 int testTransfertReussi2TransactionsAttendues() {
-    return 0;
+    return 1;
 }
 
 int testImportExportImmuables() {
-    return 0;
+    return 1;
 }
