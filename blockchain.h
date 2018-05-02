@@ -44,6 +44,6 @@ T_Block *getBlock(int id, BlockChain bc);
 
 void liberer();
 
-int export(char *fileName, BlockChain blockChain);
+int exporter(char *fileName, BlockChain blockChain);
 
 #endif

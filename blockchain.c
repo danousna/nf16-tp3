@@ -205,7 +205,7 @@ void liberer() {
  * @param blockChain
  * @return
  */
-int export(char *fileName, BlockChain blockChain) {
+int exporter(char *fileName, BlockChain blockChain) {
     FILE *file = fopen(fileName, "w");
 
     if (file == NULL) {
@@ -216,29 +216,22 @@ int export(char *fileName, BlockChain blockChain) {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
 
-    int since = 0;
-
     if (blockChain != NULL) {
         do {
-
-            // current date
-            printf("now: %d/%d/%d\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
-
             T_Transaction *transaction = blockChain->liste;
 
             while (transaction != NULL) {
 
+                fprintf(file, "%d/%d/%d;%d;%f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id, transaction->montant, transaction->desc);
 
                 transaction = transaction->suiv;
             }
 
             blockChain = blockChain->suiv;
-            --since;
+
+            DatePlusDays(&tm, -1);
         } while (blockChain != NULL);
     }
-
-
-    fprintf(file, "test de l'exportation...\n");
 
 
     fclose(file);

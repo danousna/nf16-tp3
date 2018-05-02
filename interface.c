@@ -3,8 +3,7 @@
 
 BlockChain bc;
 
-void afficherMenu()
-{
+void afficherMenu() {
     int choix = 0;
 
     printf("\n====== Bienvenue sur EATCoins ======\n\nEntrez le numéro correspondant à la fonction :\n\n");
@@ -19,8 +18,7 @@ void afficherMenu()
     printf("9. Exporter toutes les transactions vers un fichier.\n");
     printf("10. Importer des transactions depuis un fichier.\n\n");
 
-    do
-    {   
+    do {
         printf("Choix : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
@@ -28,8 +26,7 @@ void afficherMenu()
 
     printf("\n");
 
-    switch (choix)
-    {
+    switch (choix) {
         case 1:
             printf("=== Affichage des blocks de la blockchain ===\n\n");
             afficherBlocks();
@@ -94,8 +91,7 @@ void afficherMenu()
     }
 }
 
-void boucle()
-{
+void boucle() {
     char choix;
 
     printf("Quitter ? (y/n) : ");
@@ -108,26 +104,23 @@ void boucle()
         exit(0);
 }
 
-void afficherBlocks()
-{
+void afficherBlocks() {
     T_Block *currentBlock = bc;
 
     do {
         printf("Block #%d\n", currentBlock->id);
         currentBlock = currentBlock->suiv;
-    } while (currentBlock != NULL);    
+    } while (currentBlock != NULL);
 }
 
-void afficherTransactionsBlock()
-{
+void afficherTransactionsBlock() {
     int choix = 0;
 
     printf("Tous les blocks :\n\n");
     afficherBlocks();
     printf("\n");
 
-    do
-    {   
+    do {
         printf("Choix : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
@@ -143,17 +136,15 @@ void afficherTransactionsBlock()
     do {
         afficherTransaction(transaction);
         transaction = transaction->suiv;
-    } while (transaction != NULL);    
+    } while (transaction != NULL);
 }
 
-void afficherTransactionsEtuJour()
-{
+void afficherTransactionsEtuJour() {
     int choix = 0;
 
     printf("Le Block du jour : %d\n", bc->id);
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
@@ -168,33 +159,29 @@ void afficherTransactionsEtuJour()
         if (transaction->id == choix)
             afficherTransaction(transaction);
         transaction = transaction->suiv;
-    } while (transaction != NULL); 
+    } while (transaction != NULL);
 }
 
-void afficherHistoriqueEtu()
-{
+void afficherHistoriqueEtu() {
     int choix = 0;
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant : ");
         scanf("%d", &choix);
         while ((getchar()) != '\n');
     } while (choix < 0 || choix > INT_MAX);
 
     printf("\n");
-    
+
     consulter(choix, bc);
 }
 
-void crediterCompte()
-{
+void crediterCompte() {
     int id = 0;
     float montant = 0;
     char desc[255];
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant : ");
         scanf("%d", &id);
         while ((getchar()) != '\n');
@@ -202,8 +189,7 @@ void crediterCompte()
 
     printf("\n");
 
-    do
-    {   
+    do {
         printf("Montant à créditer : ");
         scanf("%f", &montant);
         while ((getchar()) != '\n');
@@ -219,14 +205,12 @@ void crediterCompte()
     afficherTransaction(bc->liste);
 }
 
-void payerRepas()
-{
+void payerRepas() {
     int id = 0;
     float montant = 0;
     char desc[255];
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant : ");
         scanf("%d", &id);
         while ((getchar()) != '\n');
@@ -234,8 +218,7 @@ void payerRepas()
 
     printf("\n");
 
-    do
-    {   
+    do {
         printf("Montant à payer : ");
         scanf("%f", &montant);
         while ((getchar()) != '\n');
@@ -250,14 +233,12 @@ void payerRepas()
         afficherTransaction(bc->liste);
 }
 
-void transfertEtu()
-{
+void transfertEtu() {
     int id1 = 0, id2 = 0;
     float montant = 0;
     char desc[255];
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant 1 : ");
         scanf("%d", &id1);
         while ((getchar()) != '\n');
@@ -265,8 +246,7 @@ void transfertEtu()
 
     printf("\n");
 
-    do
-    {   
+    do {
         printf("ID de l'étudiant 2 : ");
         scanf("%d", &id2);
         while ((getchar()) != '\n');
@@ -274,8 +254,7 @@ void transfertEtu()
 
     printf("\n");
 
-    do
-    {   
+    do {
         printf("Montant à transférer : ");
         scanf("%f", &montant);
         while ((getchar()) != '\n');
@@ -290,23 +269,19 @@ void transfertEtu()
         afficherTransaction(bc->liste);
 }
 
-void exporterTransactions()
-{
+void exporterTransactions() {
     char nom[100];
-    char *extension = ".txt";
     FILE *fp;
 
     printf("Nom du fichier : \n");
     fgets(nom, 96, stdin);
 
-    strcat(nom, extension);
 
     fp = fopen(nom, "w+");
-    fprintf(fp, "test de l'exportation...\nHey");
+    fprintf(fp, "test de l'exportation...\n");
     fclose(fp);
 }
 
-void importerTransactions()
-{
+void importerTransactions() {
 
 }

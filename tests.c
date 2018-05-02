@@ -298,6 +298,6 @@ int testImportExportImmuables() {
     crediter(11, 393, "credit du premier jour", blockChain);
 
 
-    assert(export("export.txt", blockChain) == 1);
+    assert(exporter("export.txt", blockChain) == 1);
     return 1;
 }
