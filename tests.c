@@ -299,5 +299,6 @@ int testImportExportImmuables() {
 
 
     assert(exporter("export.txt", blockChain) == 1);
+    importer("export.txt");
     return 1;
 }

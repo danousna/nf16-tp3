@@ -20,6 +20,14 @@ typedef struct Block
     struct Block *suiv;
 } T_Block;
 
+typedef struct Timestamp
+{
+    int timestamp;
+    struct Transaction *suiv;
+    struct Timestamp *suivTimestamp;
+
+} T_Timestamp;
+
 typedef T_Block* BlockChain;
 
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction);
@@ -45,5 +53,6 @@ T_Block *getBlock(int id, BlockChain bc);
 void liberer();
 
 int exporter(char *fileName, BlockChain blockChain);
+BlockChain importer(char *fileName);
 
 #endif
