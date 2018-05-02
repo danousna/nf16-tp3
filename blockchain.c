@@ -111,7 +111,7 @@ void consulter(int idEtu, BlockChain bc) {
     printf("--- affichage des %i dernières transations ---\n", historyBacktrack);
 
     T_Transaction *next = bc->liste;
-    if(next == NULL) {
+    if (next == NULL) {
         historyBacktrack = 0;
     }
     while (historyBacktrack > 0) {
@@ -242,10 +242,10 @@ int exporter(char *fileName, BlockChain blockChain) {
                     fprintf(file, "%d/", tm.tm_mday);
 
                 // Rendre joli.
-                if (tm.tm_mon < 10)
-                    fprintf(file, "0%d/", tm.tm_mon);
+                if (tm.tm_mon + 1 < 10)
+                    fprintf(file, "0%d/", tm.tm_mon + 1);
                 else
-                    fprintf(file, "%d/", tm.tm_mon);
+                    fprintf(file, "%d/", tm.tm_mon + 1);
 
                 fprintf(file, "%d;%d;%.2f;%s\n", tm.tm_year + 1900, transaction->id,
                         transaction->montant, transaction->desc);
@@ -287,11 +287,22 @@ BlockChain importer(char *fileName) {
     char str[max_lenght];
     // lecture du fichier et création de la liste chainée
     if (file) {
-        while (fscanf(file, "%s", str) != EOF) {
-            char temp[max_lenght];
-            int day = atoi(strcat(str[0], str[1]));
-            int month = atoi(strcat(str[3], str[4]));
-            int year = atoi(strcat(str[6], strcat(str[7], strcat(str[8], strcat(str[9], str[10])))));
+        char *str = NULL;
+        ssize_t read;
+        size_t len = 0;
+        while (read = getline(&str, &len, file) != -1) {
+
+            char day[3];
+            strcpy(day, str);
+            day[2] = '\0';
+
+            char month[3];
+            strcpy(month, str + 3);
+            month[2] = '\0';
+
+            char year[5];
+            strcpy(year, str + 6);
+            year[4] = '\0';
 
             int id;
             float montant;
@@ -303,16 +314,15 @@ BlockChain importer(char *fileName) {
             // 2 = description
 
             int pos = 11;
-            // date
+
+            char temp[max_lenght];
+            strcpy(temp, "");
             for (; pos < max_lenght; ++pos) {
                 if (str[pos] == '\n') {
+                    strcpy(description, temp);
                     break;
-                }
-
-
-                if (str[pos] == ';') {
+                } else if (str[pos] == ';') {
                     // on regarde dans quoi on cale le temp
-
                     switch (posL) {
                         case 0:
                             id = atoi(temp);
@@ -320,20 +330,17 @@ BlockChain importer(char *fileName) {
                         case 1:
                             montant = atof(temp);
                             break;
-                        default:
-                            strcpy(description, temp);
-                            break;
                     }
 
                     // reinitialisation du temp
                     strcpy(temp, "");
                     ++posL;
                 } else {
-                    strcat(temp, str[pos]);
+                    strncat(temp, &str[pos], 1);
                 }
             }
 
-            printf("%d/%d/%d", day, month, year);
+            printf("%d/%d/%d;%d;%f;%s\n", atoi(day), atoi(month), atoi(year), id, montant, description);
         }
         fclose(file);
     }

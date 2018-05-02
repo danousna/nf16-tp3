@@ -8,12 +8,12 @@
 
 int main()
 {
-    //initTests();
+    initTests();
 
-    
+  /*
     atexit(liberer );
 
-    extern BlockChain bc;
+   extern BlockChain bc;
 
 
     // Seed de la blockchain.
@@ -26,7 +26,7 @@ int main()
     crediter(1, 10, "C'est la richesse !", bc);
     crediter(1, 10, "Encore plus", bc->suiv);
 
-    afficherMenu();
+    afficherMenu(); */
      
 
     
