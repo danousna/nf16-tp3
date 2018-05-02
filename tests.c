@@ -188,22 +188,56 @@ int testCalculSoldeTotalNonNul() {
 }
 
 int testCreditCompteVerifTransactionTeteBlock() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    assert (
+             blockChain->liste->montant == 0
+            && blockChain->liste->id == 0
+    );
+    crediter(10, 100, "credit", blockChain);
+
+    assert(blockChain->liste->id == 10 &&
+           blockChain->liste->montant == 100 &&
+           strcmp(blockChain->liste->desc, "credit") == 0
+    );
     return 1;
 }
 
 int testPayerRepasPasAssez() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    assert(payer(10, 10, "repas à payer", blockChain) == 0);
     return 1;
 }
 
 int testPayerRepasAssezArgentNouvelleTransaction() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+
+    crediter(10, 100, "credit", blockChain);
+
+    assert(payer(10, 10, "repas à payer", blockChain) == 1);
+
+    assert(soldeEtudiant(10, blockChain) == 90);
     return 1;
 }
 
 int testHistoriqueMoins5Transactions() {
+    BlockChain blockChain = ajouterBlock(NULL);
+    crediter(10, 100, "credit", blockChain);
+    assert(payer(10, 10, "repas à payer 1", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 2", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 3", blockChain) == 1);
+
+    consulter(10, blockChain);
+
     return 1;
 }
 
 int testHistoriqueAucuneTransaction() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    consulter(10, blockChain);
     return 1;
 }
 
