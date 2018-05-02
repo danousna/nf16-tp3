@@ -284,7 +284,7 @@ int testTransfertReussi2TransactionsAttendues() {
 
 int testImportExportImmuables() {
     BlockChain blockChain = ajouterBlock(NULL);
-    crediter(10, 0, "credit", blockChain);
+    crediter(10, 1000, "credit", blockChain);
     crediter(11, 100, "credit", blockChain);
     payer(10, 10, "repas à payer 1", blockChain);
     blockChain = ajouterBlock(blockChain);

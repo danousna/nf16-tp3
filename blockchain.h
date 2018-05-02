@@ -55,6 +55,7 @@ void liberer();
 void DatePlusDays( struct tm* date, int days );
 
 int exporter(char *fileName, BlockChain blockChain);
+
 BlockChain importer(char *fileName);
 
 #endif
