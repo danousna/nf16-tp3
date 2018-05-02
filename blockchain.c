@@ -1,3 +1,4 @@
+#include <time.h>
 #include "blockchain.h"
 
 BlockChain bc;
@@ -114,7 +115,7 @@ void consulter(int idEtu, BlockChain bc) {
             historyBacktrack--;
         }
 
-        if(next->suiv != NULL) {
+        if (next->suiv != NULL) {
             next = next->suiv;
 
             // vérification si nous sommes arrivés à la fin
@@ -195,4 +196,63 @@ void liberer() {
 
         bc = block_suiv;
     }
+}
+
+/**
+ * Export du fichier, retourne 1 si succès, 0 sinon.
+ *
+ * @param fileName
+ * @param blockChain
+ * @return
+ */
+int export(char *fileName, BlockChain blockChain) {
+    FILE *file = fopen(fileName, "w");
+
+    if (file == NULL) {
+        printf("Disc full or no permission\n");
+        return 0;
+    }
+
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    int since = 0;
+
+    if (blockChain != NULL) {
+        do {
+
+            // current date
+            printf("now: %d/%d/%d\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+
+            T_Transaction *transaction = blockChain->liste;
+
+            while (transaction != NULL) {
+
+
+                transaction = transaction->suiv;
+            }
+
+            blockChain = blockChain->suiv;
+            --since;
+        } while (blockChain != NULL);
+    }
+
+
+    fprintf(file, "test de l'exportation...\n");
+
+
+    fclose(file);
+    return 1;
+}
+
+void DatePlusDays( struct tm* date, int days )
+{
+    const time_t ONE_DAY = 24 * 60 * 60 ;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime( &date_seconds ) ; ;
 }

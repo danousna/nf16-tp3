@@ -287,5 +287,17 @@ int testTransfertReussi2TransactionsAttendues() {
 }
 
 int testImportExportImmuables() {
+    BlockChain blockChain = ajouterBlock(NULL);
+    crediter(10, 0, "credit", blockChain);
+    crediter(11, 100, "credit", blockChain);
+    payer(10, 10, "repas à payer 1", blockChain);
+    blockChain = ajouterBlock(blockChain);
+    payer(10, 10, "repas à payer 2", blockChain);
+    blockChain = ajouterBlock(blockChain);
+    crediter(10, 333, "credit du premier jour", blockChain);
+    crediter(11, 393, "credit du premier jour", blockChain);
+
+
+    assert(export("export.txt", blockChain) == 1);
     return 1;
 }
