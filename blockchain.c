@@ -196,16 +196,15 @@ void liberer() {
     }
 }
 
-void DatePlusDays( struct tm* date, int days )
-{
-    const time_t ONE_DAY = 24 * 60 * 60 ;
+void DatePlusDays(struct tm *date, int days) {
+    const time_t ONE_DAY = 24 * 60 * 60;
 
     // Seconds since start of epoch
-    time_t date_seconds = mktime( date ) + (days * ONE_DAY) ;
+    time_t date_seconds = mktime(date) + (days * ONE_DAY);
 
     // Update caller's date
     // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime( &date_seconds ) ; ;
+    *date = *localtime(&date_seconds);;
 }
 
 /**
@@ -230,8 +229,22 @@ int exporter(char *fileName, BlockChain blockChain) {
         do {
             T_Transaction *transaction = blockChain->liste;
 
-            while (transaction != NULL) {               
-                fprintf(file, "%d/%d/%d;%d;%.2f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id, transaction->montant, transaction->desc);
+            while (transaction != NULL) {
+
+                // Rendre joli.
+                if (tm.tm_mday < 10)
+                    fprintf(file, "0%d/", tm.tm_mday);
+                else
+                    fprintf(file, "%d/", tm.tm_mday);
+
+                // Rendre joli.
+                if (tm.tm_mon < 10)
+                    fprintf(file, "0%d/", tm.tm_mon);
+                else
+                    fprintf(file, "%d/", tm.tm_mon);
+
+                fprintf(file, "%d/%d/%d;%d;%.2f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id,
+                        transaction->montant, transaction->desc);
 
                 transaction = transaction->suiv;
             }
@@ -245,4 +258,93 @@ int exporter(char *fileName, BlockChain blockChain) {
 
     fclose(file);
     return 1;
+}
+
+void DatePlusDays(struct tm *date, int days) {
+    const time_t ONE_DAY = 24 * 60 * 60;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime(date) + (days * ONE_DAY);
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime(&date_seconds);;
+}
+
+/**
+ * Import du fichier, retourne 1 si succès, 0 sinon.
+ *
+ * @param fileName
+ * @param blockChain
+ * @return
+ */
+BlockChain importer(char *fileName) {
+
+    FILE *file = fopen(fileName, "r");
+
+    if (file == NULL) {
+        printf("No file found\n");
+        return 0;
+    }
+
+
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    int max_lenght = 999;
+    char str[max_lenght];
+    // lecture du fichier et création de la liste chainée
+    if (file) {
+        while (fscanf(file, "%s", str) != EOF) {
+            char temp[max_lenght];
+            int day = atoi(strcat(str[0], str[1]));
+            int month = atoi(strcat(str[3], str[4]));
+            int year = atoi(strcat(str[6], strcat(str[7], strcat(str[8], strcat(str[9], str[10])))));
+
+            int id;
+            float montant;
+            char description[255];
+
+            int posL = 0;
+            // 0 = id
+            // 1 = montant
+            // 2 = description
+
+            int pos = 11;
+            // date
+            for (; pos < max_lenght; ++pos) {
+                if (str[pos] == '\n') {
+                    break;
+                }
+
+
+                if (str[pos] == ';') {
+                    // on regarde dans quoi on cale le temp
+
+                    switch (posL) {
+                        case 0:
+                            id = atoi(temp);
+                            break;
+                        case 1:
+                            montant = atof(temp);
+                            break;
+                        default:
+                            strcpy(description, temp);
+                            break;
+                    }
+
+                    // reinitialisation du temp
+                    strcpy(temp, "");
+                    ++posL;
+                } else {
+                    strcat(temp, str[pos]);
+                }
+            }
+
+            printf("%d/%d/%d", day, month, year);
+        }
+        fclose(file);
+    }
+
+
+    // lecture de la liste chainée et ajout des transactions / blocs
 }
