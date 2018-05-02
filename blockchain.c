@@ -35,7 +35,7 @@ BlockChain ajouterBlock(BlockChain bc) {
     return newB;
 }
 
-float totalTransactionEtudiantBlock(int idEtu, T_Block * b) {
+float totalTransactionEtudiantBlock(int idEtu, T_Block *b) {
     float total = 0;
     T_Transaction *next = b->liste;
 
@@ -162,16 +162,13 @@ T_Block *getBlock(int id, BlockChain bc) {
     return NULL;
 }
 
-void liberer()
-{
+void liberer() {
     printf("Libération de l'espace mémoire...\n");
 
-    while (bc != NULL)
-    {
+    while (bc != NULL) {
         T_Block *block_suiv = bc->suiv;
 
-        while (bc->liste != NULL)
-        {            
+        while (bc->liste != NULL) {
             T_Transaction *transaction_suiv = bc->liste->suiv;
 
             // free(bc->liste->id);
