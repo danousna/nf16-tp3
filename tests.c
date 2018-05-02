@@ -53,7 +53,7 @@ int testAjoutPremiereTransaction() {
 
     // verification de l'initialisation
     assert(blockChain->suiv == NULL);
-    assert(blockChain->liste->suiv == NULL);
+    assert(blockChain->liste == NULL);
 
     blockChain->liste = ajouterTransaction(0, 10, "Première transaction", blockChain->liste);
     // vérification qu'il n'y a qu'un seul block et qu'il ne contienne que notre transaction.
@@ -72,7 +72,7 @@ int testAjoutAutreTransactions() {
 
     // verification de l'initialisation
     assert(blockChain->suiv == NULL);
-    assert(blockChain->liste->suiv == NULL);
+    assert(blockChain->liste == NULL);
 
     blockChain->liste = ajouterTransaction(0, 10, "Première transaction", blockChain->liste);
     blockChain->liste = ajouterTransaction(1, 30, "Deuxième transaction", blockChain->liste);
@@ -107,8 +107,7 @@ int testBlockPremierId() {
     assert(blockChain->id == 0);
 
     // verification liste vide transactions
-    assert(blockChain->liste->suiv == NULL);
-    assert(blockChain->liste->montant == 0);
+    assert(blockChain->liste == NULL);
     return 1;
 }
 
@@ -190,10 +189,7 @@ int testCalculSoldeTotalNonNul() {
 int testCreditCompteVerifTransactionTeteBlock() {
     BlockChain blockChain = ajouterBlock(NULL);
 
-    assert (
-             blockChain->liste->montant == 0
-            && blockChain->liste->id == 0
-    );
+    assert (blockChain->liste == NULL);
     crediter(10, 100, "credit", blockChain);
 
     assert(blockChain->liste->id == 10 &&
@@ -299,6 +295,6 @@ int testImportExportImmuables() {
 
 
     assert(exporter("export.txt", blockChain) == 1);
-    importer("export.txt");
+    //importer("export.txt");
     return 1;
 }

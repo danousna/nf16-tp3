@@ -111,6 +111,9 @@ void consulter(int idEtu, BlockChain bc) {
     printf("--- affichage des %i dernières transations ---\n", historyBacktrack);
 
     T_Transaction *next = bc->liste;
+    if(next == NULL) {
+        historyBacktrack = 0;
+    }
     while (historyBacktrack > 0) {
         if (next->id == idEtu) {
             afficherTransaction(next);
@@ -244,7 +247,7 @@ int exporter(char *fileName, BlockChain blockChain) {
                 else
                     fprintf(file, "%d/", tm.tm_mon);
 
-                fprintf(file, "%d/%d/%d;%d;%.2f;%s\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, transaction->id,
+                fprintf(file, "%d;%d;%.2f;%s\n", tm.tm_year + 1900, transaction->id,
                         transaction->montant, transaction->desc);
 
                 transaction = transaction->suiv;
