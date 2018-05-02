@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
-DEPS = blockchain.h interface.h
-OBJ = main.o blockchain.o interface.o
+DEPS = blockchain.h interface.h tests.h
+OBJ = main.o blockchain.o interface.o tests.o
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
