@@ -242,14 +242,47 @@ int testHistoriqueAucuneTransaction() {
 }
 
 int testHistoriquePlus5HistoriquesChronologique() {
+    BlockChain blockChain = ajouterBlock(NULL);
+    crediter(10, 100, "NE DOIT PAS APPARAITRE", blockChain);
+    assert(payer(10, 10, "repas à payer 1", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 2", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 3", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 3", blockChain) == 1);
+    assert(payer(10, 10, "repas à payer 3", blockChain) == 1);
+
+    consulter(10, blockChain);
+
     return 1;
 }
 
 int testTransfertPasAssezArgentOrgine() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    crediter(10, 100, "credit", blockChain);
+    crediter(11, 0, "credit", blockChain);
+
+    assert(transfert(11, 10, 0.230, "transfert", blockChain) == 0);
+
     return 1;
 }
 
 int testTransfertReussi2TransactionsAttendues() {
+    BlockChain blockChain = ajouterBlock(NULL);
+
+    crediter(10, 0, "credit", blockChain);
+    crediter(11, 100, "credit", blockChain);
+
+    assert(transfert(11, 10, 100, "transfert", blockChain) == 1);
+
+    assert(soldeEtudiant(10, blockChain) == 100);
+    assert(soldeEtudiant(11, blockChain) == 0);
+
+    assert(blockChain->liste->id == 10 &&
+            blockChain->liste->montant == 100);
+
+    assert(blockChain->liste->suiv->id == 11 &&
+           blockChain->liste->suiv->montant == -100);
+
     return 1;
 }
 

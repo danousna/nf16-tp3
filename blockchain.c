@@ -113,18 +113,23 @@ void consulter(int idEtu, BlockChain bc) {
             afficherTransaction(next);
             historyBacktrack--;
         }
-        next = next->suiv;
 
-        // vérification si nous sommes arrivés à la fin
-        // des transactions du bloc, si tel est le cas, on passe
-        // au bloc suivant
-        if (next->suiv == NULL) {
-            // si on a atteint le premier bloc, on sort
-            if (currentBlock->suiv == NULL) {
-                historyBacktrack = 0;
-            } else {
-                next = currentBlock->suiv->liste;
+        if(next->suiv != NULL) {
+            next = next->suiv;
+
+            // vérification si nous sommes arrivés à la fin
+            // des transactions du bloc, si tel est le cas, on passe
+            // au bloc suivant
+            if (next->suiv == NULL) {
+                // si on a atteint le premier bloc, on sort
+                if (currentBlock->suiv == NULL) {
+                    historyBacktrack = 0;
+                } else {
+                    next = currentBlock->suiv->liste;
+                }
             }
+        } else {
+            historyBacktrack = 0;
         }
     }
     printf("--- fin de l'affichage ---\n");
