@@ -136,9 +136,13 @@ int transfert(int idSource, int idDestination, float montant, char *desc, BlockC
         printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
         return 0;
     } else {
-        payer(idSource, montant, desc, bc);
-        crediter(idDestination, montant, desc, bc);
-        return 1;
+        if (payer(idSource, montant, desc, bc) == 1) {
+            crediter(idDestination, montant, desc, bc);
+            return 1;
+        } else {
+            printf("Erreur : Le compte source ne peut satisfaire le montant à payer. \n");
+            return 0;
+        }
     }
 }
 
