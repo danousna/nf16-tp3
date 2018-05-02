@@ -78,12 +78,15 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
 }
 
 int payer(int idEtu, float montant, char *desc, BlockChain bc) {
-    if (montant < 0)
+    if (montant < 0) {
+        printf("Erreur : Le montant à payer ne peut pas être négatif. \n");
         return 0;
+    }
 
-    if (soldeEtudiant(idEtu, bc) < montant)
+    if (soldeEtudiant(idEtu, bc) < montant) {
+        printf("Erreur : Le compte source ne peut satisfaire le montant à payer. \n");
         return 0;
-    else {
+    } else {
         // On débite de - le montant du solde de l'étudiant.
         bc->liste = ajouterTransaction(idEtu, -montant, desc, bc->liste);
         return 1;
@@ -138,17 +141,11 @@ void consulter(int idEtu, BlockChain bc) {
 }
 
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
-    if (montant < 0) {
-        printf("Erreur : Le montant du transfert ne peut pas être négatif. \n");
-        return 0;
+    if (payer(idSource, montant, desc, bc) == 1) {
+        crediter(idDestination, montant, desc, bc);
+        return 1;
     } else {
-        if (payer(idSource, montant, desc, bc) == 1) {
-            crediter(idDestination, montant, desc, bc);
-            return 1;
-        } else {
-            printf("Erreur : Le compte source ne peut satisfaire le montant à payer. \n");
-            return 0;
-        }
+        return 0;
     }
 }
 
