@@ -260,17 +260,6 @@ int exporter(char *fileName, BlockChain blockChain) {
     return 1;
 }
 
-void DatePlusDays(struct tm *date, int days) {
-    const time_t ONE_DAY = 24 * 60 * 60;
-
-    // Seconds since start of epoch
-    time_t date_seconds = mktime(date) + (days * ONE_DAY);
-
-    // Update caller's date
-    // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime(&date_seconds);;
-}
-
 /**
  * Import du fichier, retourne 1 si succès, 0 sinon.
  *
