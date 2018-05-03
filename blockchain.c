@@ -1,8 +1,18 @@
 #include <time.h>
+#include <f2fs_fs.h>
 #include "blockchain.h"
 
 BlockChain bc;
 
+/**
+ * Ajoute une transaction à la liste de Transactions.
+ *
+ * @param idEtu
+ * @param montant
+ * @param desc
+ * @param listeTransaction
+ * @return
+ */
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));
 
@@ -16,6 +26,12 @@ T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transa
     return new;
 }
 
+/**
+ * Ajoute un nouveau bloc à la Blockchain.
+ *
+ * @param bc NULL pour le premier block.
+ * @return
+ */
 BlockChain ajouterBlock(BlockChain bc) {
     T_Block *newB = malloc(sizeof(T_Block));
 
@@ -35,6 +51,13 @@ BlockChain ajouterBlock(BlockChain bc) {
     return newB;
 }
 
+/**
+ * Retourne le montant total de dépenses ou de gains sur une journée.
+ *
+ * @param idEtu
+ * @param b
+ * @return
+ */
 float totalTransactionEtudiantBlock(int idEtu, T_Block *b) {
     float total = 0;
     T_Transaction *next = b->liste;
@@ -48,6 +71,13 @@ float totalTransactionEtudiantBlock(int idEtu, T_Block *b) {
     return total;
 }
 
+/**
+ * Retourne le solde total d'un compte.
+ *
+ * @param idEtu
+ * @param bc
+ * @return
+ */
 float soldeEtudiant(int idEtu, BlockChain bc) {
     T_Block *currentBlock = bc;
     float solde = 0;
@@ -66,6 +96,16 @@ float soldeEtudiant(int idEtu, BlockChain bc) {
     return solde;
 }
 
+/**
+ * Permet de créditer un compte d'une certaine somme.
+ *
+ * Le montant à créditer doit être positif.
+ *
+ * @param idEtu
+ * @param montant
+ * @param desc
+ * @param bc
+ */
 void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant <= 0) {
         printf("Le montant à créditer : %f doit être >= 0.", montant);
@@ -76,6 +116,18 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
     bc->liste = ajouterTransaction(idEtu, montant, desc, bc->liste);
 }
 
+/**
+ * Permet de réaliser un payement si les fonds du compte payeur
+ * le permettent.
+ *
+ * Le montant à payer est strictement positif.
+ *
+ * @param idEtu
+ * @param montant
+ * @param desc
+ * @param bc
+ * @return
+ */
 int payer(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant < 0) {
         printf("Erreur : Le montant à payer ne peut pas être négatif. \n");
@@ -92,6 +144,12 @@ int payer(int idEtu, float montant, char *desc, BlockChain bc) {
     }
 }
 
+/**
+ * Affiche l'historique d'un compte (maximum 5 dernières transactions).
+ *
+ * @param idEtu
+ * @param bc
+ */
 void consulter(int idEtu, BlockChain bc) {
     /**
      * Profondeur de recherche des transactions.
@@ -142,6 +200,17 @@ void consulter(int idEtu, BlockChain bc) {
 
 }
 
+/**
+ * Transfert des fonds d'une source vers une destination si les fonds
+ * de la source le permettent.
+ *
+ * @param idSource
+ * @param idDestination
+ * @param montant
+ * @param desc
+ * @param bc
+ * @return
+ */
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
     if (payer(idSource, montant, desc, bc) == 1) {
         crediter(idDestination, montant, desc, bc);
@@ -151,6 +220,11 @@ int transfert(int idSource, int idDestination, float montant, char *desc, BlockC
     }
 }
 
+/**
+ * Affiche une transaction.
+ *
+ * @param transaction
+ */
 void afficherTransaction(T_Transaction *transaction) {
     printf("Transaction\n");
     printf(" - idEtu : %i\n", transaction->id);
@@ -160,6 +234,13 @@ void afficherTransaction(T_Transaction *transaction) {
     printf("   \"%s\"\n", transaction->desc);
 }
 
+/**
+ * Retourne le Block avec l'id recherché dans la Blockchain.
+ *
+ * @param id
+ * @param bc
+ * @return
+ */
 T_Block *getBlock(int id, BlockChain bc) {
     T_Block *currentBlock = bc;
 
@@ -172,6 +253,9 @@ T_Block *getBlock(int id, BlockChain bc) {
     return NULL;
 }
 
+/**
+ * Libère la mémoire du programme.
+ */
 void liberer() {
     printf("Libération de l'espace mémoire...\n");
 
@@ -200,6 +284,12 @@ void liberer() {
     }
 }
 
+/**
+ * Permet de manipuler une date en lui ajoutant ou soustrayant un nombre de jours.
+ *
+ * @param date
+ * @param days
+ */
 void DatePlusDays(struct tm *date, int days) {
     const time_t ONE_DAY = 24 * 60 * 60;
 
@@ -268,7 +358,6 @@ int exporter(char *fileName, BlockChain blockChain) {
  * Import du fichier, retourne 1 si succès, 0 sinon.
  *
  * @param fileName
- * @param blockChain
  * @return
  */
 BlockChain importer(char *fileName) {
@@ -281,7 +370,7 @@ BlockChain importer(char *fileName) {
     }
 
 
-    BlockChain blockChain = ajouterBlock(NULL);
+    BlockChain blockChain = NULL;
 
     int max_lenght = 999;
     char str[max_lenght];
@@ -290,19 +379,14 @@ BlockChain importer(char *fileName) {
         char *str = NULL;
         ssize_t read;
         size_t len = 0;
+
+        T_Timestamp *timestampList = NULL;
+
         while (read = getline(&str, &len, file) != -1) {
 
-            char day[3];
-            strcpy(day, str);
-            day[2] = '\0';
-
-            char month[3];
-            strcpy(month, str + 3);
-            month[2] = '\0';
-
-            char year[5];
-            strcpy(year, str + 6);
-            year[4] = '\0';
+            int day = atoi((char[3]) {str[0], str[1], '\0'});
+            int month = atoi((char[3]) {str[3], str[4], '\0'});
+            int year = atoi((char[5]) {str[6], str[7], str[8], str[9], '\0'});
 
             int id;
             float montant;
@@ -340,11 +424,141 @@ BlockChain importer(char *fileName) {
                 }
             }
 
-            printf("%d/%d/%d;%d;%f;%s\n", atoi(day), atoi(month), atoi(year), id, montant, description);
+            // calcul du timestamp
+            struct tm t;
+            time_t t_of_day;
+
+            t.tm_year = year;
+            t.tm_mon = month;           // Month, 0 - jan
+            t.tm_mday = day;          // Day of the month
+            t.tm_hour = 0;
+            t.tm_min = 0;
+            t.tm_sec = 0;
+            t.tm_isdst = -1;        // Is DST on? 1 = yes, 0 = no, -1 = unknown
+            t_of_day = mktime(&t);
+
+            // création de la transaction
+            T_Transaction *transaction = malloc(sizeof(T_Transaction));
+            strcpy(transaction->desc, description);
+            transaction->id = id;
+            transaction->montant = montant;
+            transaction->suiv = NULL;
+
+            // ajout à la liste de transactions
+            timestampList = insert(t_of_day, transaction, timestampList);
         }
         fclose(file);
+
+
+        // lecture de la liste chainée et ajout des transactions / blocs
+        if (timestampList != NULL) {
+            // parcours des timestamps (blocs)
+            T_Timestamp *t = timestampList;
+            long lastTimestamp = t->timestamp;
+            do {
+                // calcul de combien de blocs vides à ajouter
+                // depuis le dernier timestamp
+                int nbDaysSinceLastBlock = max(0, (difftime(t->timestamp, lastTimestamp) / 86400) - 1);
+                for (int i = 1; i < nbDaysSinceLastBlock; ++i) {
+                    blockChain = ajouterBlock(blockChain);
+                }
+
+                // ajout du bloc du jour
+                blockChain = ajouterBlock(blockChain);
+
+                // ajout des transactions du jour
+                T_Transaction *transactionCurr = t->transactions;
+                while (transactionCurr != NULL) {
+                    blockChain->liste = ajouterTransaction(transactionCurr->id, transactionCurr->montant,
+                                                           transactionCurr->desc, blockChain->liste);
+
+                    T_Transaction *nextT = transactionCurr->suiv;
+                    // on libère la mémoire après ajout
+                    free(transactionCurr);
+                    transactionCurr = nextT;
+                }
+
+                lastTimestamp = t->timestamp;
+                t = t->nextTimestamp;
+
+            } while (t != NULL);
+        }
+
+
+        // libération des timestamps
+        freeTimestamp(timestampList);
+    }
+    return blockChain;
+}
+
+/**
+ * Libère la mémoire occupée par les Timestamps, pas par les Transactions
+ * car elles peuvent être partagées.
+ *
+ * @param timestamp
+ */
+void freeTimestamp(T_Timestamp *timestamp) {
+    while (timestamp != NULL) {
+        T_Timestamp *tempTimestamp = timestamp->nextTimestamp;
+        free(timestamp);
+        timestamp = tempTimestamp;
+    }
+}
+
+/**
+ * Insert the timestamp in the right place.
+ *
+ * Sorted from older to the most recent
+ * @param timestamp
+ * @param transaction
+ * @param timestampList
+ * @return
+ */
+T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *timestampList) {
+    if (transaction == NULL) {
+        return timestampList;
+    }
+
+    // si il n'y a pas de noeud, initialisation
+    if (timestampList == NULL) {
+        timestampList = malloc(sizeof(T_Timestamp));
+        timestampList->timestamp = timestamp;
+        timestampList->nextTimestamp = NULL;
+        timestampList->transactions = NULL;
+    }
+
+    // tant qu'on a un noeud suivant
+    // et que le timestamp courant n'est pas celui recherché
+    // et que le prochain timestamp est <= à celui recherché
+    // alors on avance dans le parcours
+
+    while (timestampList->nextTimestamp != NULL &&
+           timestampList->timestamp != timestamp &&
+           timestampList->nextTimestamp->timestamp <= timestamp
+            ) {
+        timestampList = timestampList->nextTimestamp;
     }
 
 
-    // lecture de la liste chainée et ajout des transactions / blocs
+
+    // il existe un noeud avec ce timestamp
+    if (timestampList->timestamp == timestamp) {
+        // ajout de la transaction en tête de liste
+
+        // ajout du chainage
+        // passage en tête de liste
+        transaction->suiv = timestampList->transactions;
+        timestampList->transactions = transaction;
+    } else {
+        // sinon on doit créer ce noeud et l'ajouter
+        T_Timestamp *timestampListNew = malloc(sizeof(T_Timestamp));
+        timestampListNew->timestamp = timestamp;
+        timestampListNew->nextTimestamp = timestampList;
+        transaction->suiv = NULL;
+        timestampListNew->transactions = transaction;
+
+        timestampList = timestampListNew;
+    }
+
+    return timestampList;
 }

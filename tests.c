@@ -290,11 +290,31 @@ int testImportExportImmuables() {
     blockChain = ajouterBlock(blockChain);
     payer(10, 10, "repas à payer 2", blockChain);
     blockChain = ajouterBlock(blockChain);
+    blockChain = ajouterBlock(blockChain);
+    blockChain = ajouterBlock(blockChain);
     crediter(10, 333, "credit du premier jour", blockChain);
     crediter(11, 393, "credit du premier jour", blockChain);
 
+    float totalEtu10 = soldeEtudiant(10, blockChain);
+    float totalEtu11 = soldeEtudiant(11, blockChain);
 
-    assert(exporter("export.txt", blockChain) == 1);
-    importer("export.txt");
+
+    assert(exporter("export-temoin.txt", blockChain) == 1);
+    blockChain = importer("export-temoin.txt");
+
+    int nbBlocks = 1;
+    BlockChain tempB = blockChain;
+    while (tempB->suiv != NULL) {
+        ++nbBlocks;
+        tempB = tempB->suiv;
+    }
+
+    assert(nbBlocks == 5);
+
+    exporter("export-a-verifier.txt", blockChain);
+
+    assert(totalEtu10 == soldeEtudiant(10, blockChain));
+    assert(totalEtu11 == soldeEtudiant(11, blockChain));
+
     return 1;
 }

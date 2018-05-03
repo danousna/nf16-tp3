@@ -5,36 +5,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Transaction
-{
+typedef struct Transaction {
     int id;
     float montant;
     char desc[255];
     struct Transaction *suiv;
 } T_Transaction;
 
-typedef struct Block
-{
+typedef struct Block {
     int id;
     struct Transaction *liste;
     struct Block *suiv;
 } T_Block;
 
-typedef struct Timestamp
-{
-    int timestamp;
-    struct Transaction *suiv;
-    struct Timestamp *suivTimestamp;
+typedef struct Timestamp {
+    long timestamp;
+    struct Transaction *transactions;
+    struct Timestamp *nextTimestamp;
 
 } T_Timestamp;
 
-typedef T_Block* BlockChain;
+typedef T_Block *BlockChain;
 
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction);
 
 BlockChain ajouterBlock(BlockChain bc);
 
-float totalTransactionEtudiantBlock(int idEtu, T_Block * b);
+float totalTransactionEtudiantBlock(int idEtu, T_Block *b);
 
 float soldeEtudiant(int idEtu, BlockChain bc);
 
@@ -52,10 +49,14 @@ T_Block *getBlock(int id, BlockChain bc);
 
 void liberer();
 
-void DatePlusDays( struct tm* date, int days );
+void DatePlusDays(struct tm *date, int days);
 
 int exporter(char *fileName, BlockChain blockChain);
 
+T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *timestampList);
+
 BlockChain importer(char *fileName);
+
+void freeTimestamp(T_Timestamp *timestamp);
 
 #endif
