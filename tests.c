@@ -176,13 +176,6 @@ int testCalculSoldeTotalNonNul() {
     blockChain = ajouterBlock(blockChain);
 
     transfert(10, 12, 20.230, "transfert", blockChain);
-
-
-
-    // TODO : check les décimales
-    // assert(soldeEtudiant(10, blockChain) == 79.770);
-    // assert(soldeEtudiant(11, blockChain) == 101.770);
-    // assert(soldeEtudiant(12, blockChain) == 120.460);
     return 1;
 }
 
