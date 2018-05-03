@@ -506,9 +506,10 @@ void freeTimestamp(T_Timestamp *timestamp) {
 }
 
 /**
- * Insert the timestamp in the right place.
+ * Ajoute la transaction dans son groupe de Timestamp.
  *
- * Sorted from older to the most recent
+ * Les Timestamp sont une liste triée du plus ancien au plus récent.
+ * 
  * @param timestamp
  * @param transaction
  * @param timestampList
