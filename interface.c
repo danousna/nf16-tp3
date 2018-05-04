@@ -282,5 +282,14 @@ void exporterTransactions() {
 }
 
 void importerTransactions() {
+    char fichier[100];
 
+    printf("Nom du fichier à importer (dans le même répertoire) : \n");
+    fgets(fichier, 100, stdin);
+
+    BlockChain bc;
+
+    if (bc = importer(fichier)) {
+        printf("Importation réussie.\n");
+    }
 }

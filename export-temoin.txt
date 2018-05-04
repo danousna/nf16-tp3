@@ -1,0 +1,6 @@
+04/05/2018;11;393.00;credit du premier jour
+04/05/2018;10;333.00;credit du premier jour
+01/05/2018;10;-10.00;repas à payer 2
+30/04/2018;10;-10.00;repas à payer 1
+30/04/2018;11;100.00;credit
+30/04/2018;10;1000.00;credit

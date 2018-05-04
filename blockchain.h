@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+// #include <f2fs_fs.h>
 
 typedef struct Transaction {
     int id;
@@ -47,16 +49,18 @@ void afficherTransaction(T_Transaction *transaction);
 
 T_Block *getBlock(int id, BlockChain bc);
 
-void liberer();
-
-void DatePlusDays(struct tm *date, int days);
-
 int exporter(char *fileName, BlockChain blockChain);
 
 T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *timestampList);
 
 BlockChain importer(char *fileName);
 
+void liberer();
+
 void freeTimestamp(T_Timestamp *timestamp);
+
+max(int a, int b);
+
+void DatePlusDays(struct tm *date, int days);
 
 #endif

@@ -1,5 +1,3 @@
-#include <time.h>
-#include <f2fs_fs.h>
 #include "blockchain.h"
 
 BlockChain bc;
@@ -7,11 +5,11 @@ BlockChain bc;
 /**
  * Ajoute une transaction à la liste de Transactions.
  *
- * @param idEtu
- * @param montant
- * @param desc
- * @param listeTransaction
- * @return
+ * @param int idEtu
+ * @param float montant
+ * @param char *desc
+ * @param T_Transaction *listeTransaction
+ * @return T_Transaction *
  */
 T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transaction *listeTransaction) {
     T_Transaction *new = malloc(sizeof(T_Transaction));
@@ -29,8 +27,8 @@ T_Transaction *ajouterTransaction(int idEtu, float montant, char *desc, T_Transa
 /**
  * Ajoute un nouveau bloc à la Blockchain.
  *
- * @param bc NULL pour le premier block.
- * @return
+ * @param BlockChain bc NULL pour le premier block.
+ * @return T_Block *
  */
 BlockChain ajouterBlock(BlockChain bc) {
     T_Block *newB = malloc(sizeof(T_Block));
@@ -54,9 +52,9 @@ BlockChain ajouterBlock(BlockChain bc) {
 /**
  * Retourne le montant total de dépenses ou de gains sur une journée.
  *
- * @param idEtu
- * @param b
- * @return
+ * @param int idEtu
+ * @param T_Block *b
+ * @return float
  */
 float totalTransactionEtudiantBlock(int idEtu, T_Block *b) {
     float total = 0;
@@ -74,9 +72,9 @@ float totalTransactionEtudiantBlock(int idEtu, T_Block *b) {
 /**
  * Retourne le solde total d'un compte.
  *
- * @param idEtu
- * @param bc
- * @return
+ * @param int idEtu
+ * @param BlockChain bc
+ * @return float
  */
 float soldeEtudiant(int idEtu, BlockChain bc) {
     T_Block *currentBlock = bc;
@@ -101,10 +99,10 @@ float soldeEtudiant(int idEtu, BlockChain bc) {
  *
  * Le montant à créditer doit être positif.
  *
- * @param idEtu
- * @param montant
- * @param desc
- * @param bc
+ * @param int idEtu
+ * @param float montant
+ * @param char *desc
+ * @param BlockChain bc
  */
 void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant <= 0) {
@@ -122,11 +120,11 @@ void crediter(int idEtu, float montant, char *desc, BlockChain bc) {
  *
  * Le montant à payer est strictement positif.
  *
- * @param idEtu
- * @param montant
- * @param desc
- * @param bc
- * @return
+ * @param int idEtu
+ * @param float montant
+ * @param char *desc
+ * @param BlockChain bc
+ * @return int
  */
 int payer(int idEtu, float montant, char *desc, BlockChain bc) {
     if (montant < 0) {
@@ -147,8 +145,8 @@ int payer(int idEtu, float montant, char *desc, BlockChain bc) {
 /**
  * Affiche l'historique d'un compte (maximum 5 dernières transactions).
  *
- * @param idEtu
- * @param bc
+ * @param int idEtu
+ * @param BlockChain bc
  */
 void consulter(int idEtu, BlockChain bc) {
     /**
@@ -204,12 +202,12 @@ void consulter(int idEtu, BlockChain bc) {
  * Transfert des fonds d'une source vers une destination si les fonds
  * de la source le permettent.
  *
- * @param idSource
- * @param idDestination
- * @param montant
- * @param desc
- * @param bc
- * @return
+ * @param int idSource
+ * @param int idDestination
+ * @param float montant
+ * @param char *desc
+ * @param BlockChain bc
+ * @return int
  */
 int transfert(int idSource, int idDestination, float montant, char *desc, BlockChain bc) {
     if (payer(idSource, montant, desc, bc) == 1) {
@@ -223,7 +221,7 @@ int transfert(int idSource, int idDestination, float montant, char *desc, BlockC
 /**
  * Affiche une transaction.
  *
- * @param transaction
+ * @param T_Transaction *transaction
  */
 void afficherTransaction(T_Transaction *transaction) {
     printf("Transaction\n");
@@ -237,9 +235,9 @@ void afficherTransaction(T_Transaction *transaction) {
 /**
  * Retourne le Block avec l'id recherché dans la Blockchain.
  *
- * @param id
- * @param bc
- * @return
+ * @param int id
+ * @param BlockChain bc
+ * @return T_Block * | NULL
  */
 T_Block *getBlock(int id, BlockChain bc) {
     T_Block *currentBlock = bc;
@@ -277,7 +275,7 @@ void liberer() {
             }
         }
 
-        //free(&bc->id);
+        //free(bc->id);
         free(bc);
 
         bc = block_suiv;
@@ -285,28 +283,11 @@ void liberer() {
 }
 
 /**
- * Permet de manipuler une date en lui ajoutant ou soustrayant un nombre de jours.
- *
- * @param date
- * @param days
- */
-void DatePlusDays(struct tm *date, int days) {
-    const time_t ONE_DAY = 24 * 60 * 60;
-
-    // Seconds since start of epoch
-    time_t date_seconds = mktime(date) + (days * ONE_DAY);
-
-    // Update caller's date
-    // Use localtime because mktime converts to UTC so may change date
-    *date = *localtime(&date_seconds);;
-}
-
-/**
  * Export du fichier, retourne 1 si succès, 0 sinon.
  *
- * @param fileName
- * @param blockChain
- * @return
+ * @param char *fileName
+ * @param BlockChain blockChain
+ * @return int
  */
 int exporter(char *fileName, BlockChain blockChain) {
     FILE *file = fopen(fileName, "w");
@@ -357,10 +338,12 @@ int exporter(char *fileName, BlockChain blockChain) {
 /**
  * Import du fichier, retourne 1 si succès, 0 sinon.
  *
- * @param fileName
- * @return
+ * @param char *fileName
+ * @return BlockChain
  */
 BlockChain importer(char *fileName) {
+
+    printf("%s\n", fileName);
 
     FILE *file = fopen(fileName, "r");
 
@@ -372,8 +355,8 @@ BlockChain importer(char *fileName) {
 
     BlockChain blockChain = NULL;
 
-    int max_lenght = 999;
-    char str[max_lenght];
+    int max_length = 999;
+    char str[max_length];
     // lecture du fichier et création de la liste chainée
     if (file) {
         char *str = NULL;
@@ -399,9 +382,9 @@ BlockChain importer(char *fileName) {
 
             int pos = 11;
 
-            char temp[max_lenght];
+            char temp[max_length];
             strcpy(temp, "");
-            for (; pos < max_lenght; ++pos) {
+            for (; pos < max_length; ++pos) {
                 if (str[pos] == '\n') {
                     strcpy(description, temp);
                     break;
@@ -495,7 +478,7 @@ BlockChain importer(char *fileName) {
  * Libère la mémoire occupée par les Timestamps, pas par les Transactions
  * car elles peuvent être partagées.
  *
- * @param timestamp
+ * @param T_Timestamp *timestamp
  */
 void freeTimestamp(T_Timestamp *timestamp) {
     while (timestamp != NULL) {
@@ -510,10 +493,10 @@ void freeTimestamp(T_Timestamp *timestamp) {
  *
  * Les Timestamp sont une liste triée du plus ancien au plus récent.
  * 
- * @param timestamp
- * @param transaction
- * @param timestampList
- * @return
+ * @param long timestamp
+ * @param T_Transaction *transaction
+ * @param T_Timestamp *timestampList
+ * @return T_Timestamp *
  */
 T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *timestampList) {
     if (transaction == NULL) {
@@ -562,4 +545,37 @@ T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *tim
     }
 
     return timestampList;
+}
+
+/* Fonctions utilitaires */
+
+/**
+ * Retourne le maximum entre deux int.
+ *
+ * @param int a
+ * @param int b
+ * @return int
+ */
+max(int a, int b) {
+    if (a >= b)
+        return a;
+    else
+        return b;
+}
+
+/**
+ * Permet de manipuler une date en lui ajoutant ou soustrayant un nombre de jours.
+ *
+ * @param struct tm *date
+ * @param int days
+ */
+void DatePlusDays(struct tm *date, int days) {
+    const time_t ONE_DAY = 24 * 60 * 60;
+
+    // Seconds since start of epoch
+    time_t date_seconds = mktime(date) + (days * ONE_DAY);
+
+    // Update caller's date
+    // Use localtime because mktime converts to UTC so may change date
+    *date = *localtime(&date_seconds);;
 }
