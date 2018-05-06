@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-// #include <f2fs_fs.h>
 
 typedef struct Transaction {
     int id;
