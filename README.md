@@ -9,7 +9,7 @@ _Le but de ce TP est d'implémenter une BlockChain simplifiée. Une blockchain p
 ## Choix d'architecture
 
 ### Organisation du projet
-Du point de vue de l'organisation du projet, nous avons choisi de séparer celui-ci en trois fichiers.
+Du point de vue de l'organisation du projet, nous avons choisis de séparer celui-ci en trois fichiers. 
 
 Le premier étant `blockchain.c` qui contient toutes les fonctions nécessaires au fonctionnement de la blockchain (dans le cadre d'une architecture MVC, ce serait le modèle).
 
