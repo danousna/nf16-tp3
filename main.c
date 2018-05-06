@@ -12,16 +12,19 @@ int main()
 
     atexit(liberer );
 
+    // Déclaration de la blockchain en variable externe.
     extern BlockChain bc;
 
+    // Block initial.
+    bc = ajouterBlock(NULL);
+    
     // Seed de la blockchain.
-    bc = ajouterBlock(NULL); // premier block
     bc = ajouterBlock(bc);
     bc = ajouterBlock(bc);
-
     crediter(1, 10, "Salut", bc);
     crediter(1, 10, "C'est la richesse !", bc);
     crediter(1, 10, "Encore plus", bc->suiv);
+    crediter(2, 300, "Encore plus", bc->suiv);
 
     afficherMenu();
     

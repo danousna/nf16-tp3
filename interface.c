@@ -275,7 +275,8 @@ void exporterTransactions() {
     char fichier[100];
 
     printf("Nom du fichier : \n");
-    fgets(fichier, 100, stdin);
+    scanf("%100s", fichier);
+    while ((getchar()) != '\n');
 
     if (exporter(fichier, bc))
         printf("Exportation réussie.\n");

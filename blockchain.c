@@ -258,16 +258,14 @@ void liberer() {
     while (bc != NULL) {
         T_Block *block_suiv = bc->suiv;
 
-        if (bc->liste != NULL) {
-            while (bc->liste->suiv != NULL) {
-                printf("Libération de la transaction (%d, %f)\n", bc->liste->id, bc->liste->montant);
+        while (bc->liste != NULL) {
+            printf("Libération de la transaction (%d, %f)\n", bc->liste->id, bc->liste->montant);
 
-                T_Transaction *transaction_suiv = bc->liste->suiv;
+            T_Transaction *transaction_suiv = bc->liste->suiv;
 
-                free(bc->liste);
+            free(bc->liste);
 
-                bc->liste = transaction_suiv;
-            }
+            bc->liste = transaction_suiv;
         }
 
         free(bc);
@@ -330,14 +328,12 @@ int exporter(char *fileName, BlockChain blockChain) {
 }
 
 /**
- * Import du fichier, retourne 1 si succès, 0 sinon.
+ * Import du fichier, retourne une nouvelle blockchain.
  *
  * @param char *fileName
  * @return BlockChain
  */
 BlockChain importer(char *fileName) {
-
-    printf("%s\n", fileName);
 
     FILE *file = fopen(fileName, "r");
 
@@ -345,7 +341,6 @@ BlockChain importer(char *fileName) {
         printf("No file found\n");
         return 0;
     }
-
 
     BlockChain blockChain = NULL;
 
