@@ -74,28 +74,24 @@ La fonction effectue des affectations simples. La complexité est donc : **O(1)*
 
 ### ajouterBlock()
 
-Pareil, **O(1)**.
+La fonction effectue des affectations simples. La complexité est donc : **O(1)**.
 
 ### totalTransactionEtudiantBlock()
-
-Soit `n` le nombre de transactions dans le block `b`, avec une boucle while, on aura donc une complexité **O(n)**.
+Pour obtenir le total des transactions sur un Bloc, il faut parcourir les _n_ transactions de ce bloc (boucle while),  on a donc une complexité **O(n)**.
 
 ### soldeEtudiant()
-
-Soit `m` le nombre de blocks dans la blockchain `bc`, `n` le nombre de transactions dans ces blocks, la double boucle `while` nous donne une complexité **O(n\*m)**. 
+La fonction de solde doit dans tous les cas, consulter toutes les transactions de la Blockchain, pour se faire, il faut parcourir les _n_ blocs de la Blockchain pour lire les _m_ transactions qu'ils contiennent chacun (on prend m = le nombre maximum de transactions contenues dans un bloc). La double boucle `while` nous donne donc une omplexité **O(n\*m)**. 
 
 ### crediter()
 
 Cette fonction présente une complexité constante : **O(1)**.
 
 ### payer()
-
-Dans la condition `if`, on utilise la fonction `soldeEtudiant()`, la complexité est donc : **O(n\*m)**.
+La fonction payer contient des instructions à coût constant, en revanche, elle fait appel à la fonction `soldeEtudiant()` de manière permanente et qui a une complexité de  **O(n\*m)**, sa complexité est donc  **O(n\*m)**.
 
 ### consulter()
-La fonction consulter doit rechercher un nombre de transactions pour un étudiant. Elle doit donc au pire cas parcourir les _n_ transactions de la Blockchain si l'étudiant n'a que 4 transactions ou si il a exactement 5 transaction et que la première transaction de la blockchain était la sienne.
-La complexité de de cette fonction donc **O(n)**.
-
+La fonction consulter doit rechercher un nombre de transactions pour un étudiant. Elle doit donc au pire cas parcourir les _m_ transactions de chacun des _n_ blocs de la Blockchain si l'étudiant n'a que 4 transactions ou si il a exactement 5 transaction et que la première transaction de la blockchain était la sienne.
+La complexité de de cette fonction donc **O(n\*m)**.
 
 ### transfert()
 
@@ -111,7 +107,7 @@ Pour obtenir le bloc dans la Blockchain constituée de _n_ blocs (liste chainée
 
 ### exporter()
 
-L'exportation des _n_ transactions se fait de manière linéaire, on écrit ligne par ligne dans un fichier les transactions, la complexité est donc de **O(n)**.
+Pour exporter les transactions, on doit parcourir les _m_ blocs, et pour chacun de ces blocs on parcours les _n_ transactions. On écrit dans le fichier chaque transaction ligne par lignre. Par conséquent, on a **O(n\*m)**.
 
 ### insert()
 
