@@ -64,8 +64,6 @@ Mise à part les fonctions correspondant aux 10 options et la fonction d'afficha
 
 Ce fichier contient l'ensemble des tests qui assurent le bon comportement de la Blockchain. Seules les fonctions de `blockchain.c` ont été testées de cette manière. Il est possible de lancer les tests avec la fonction `initTests();` .
 
-***
-
 ## Complexité des fonctions
 
 Nous traiterons uniquement les fonctions relatives à la blockchain et non les fonctions d'interface.
