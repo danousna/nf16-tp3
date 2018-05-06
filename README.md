@@ -68,46 +68,73 @@ Ce fichier contient l'ensemble des tests qui assurent le bon comportement de la 
 Nous traiteront uniquement les fonctions relatives à la blockchain et non les fonctions d'interface.
 Les fonctions de tests n'ayant qu'une utilité lors de développements, leur complexité ne sera pas abordée non plus.
 
-### ajouterTransaction();
+### ajouterTransaction()
 
 La fonction effectue des affectations simples. La complexité est donc : **O(1)**.
 
-### ajouterBlock();
+### ajouterBlock()
 
 Pareil, **O(1)**.
 
-### totalTransactionEtudiantBlock();
+### totalTransactionEtudiantBlock()
 
 Soit `n` le nombre de transactions dans le block `b`, avec une boucle while, on aura donc une complexité **O(n)**.
 
-### soldeEtudiant();
+### soldeEtudiant()
 
 Soit `m` le nombre de blocks dans la blockchain `bc`, `n` le nombre de transactions dans ces blocks, la double boucle `while` nous donne une complexité **O(n\*m)**. 
 
-### crediter();
+### crediter()
 
-**O(1)**.
+Cette fonction présente une complexité constante : **O(1)**.
 
-### payer();
+### payer()
 
 Dans la condition `if`, on utilise la fonction `soldeEtudiant()`, la complexité est donc : **O(n\*m)**.
 
-### consulter();
+### consulter()
+La fonction consulter doit rechercher un nombre de transactions pour un étudiant. Elle doit donc au pire cas parcourir les _n_ transactions de la Blockchain si l'étudiant n'a que 4 transactions ou si il a exactement 5 transaction et que la première transaction de la blockchain était la sienne.
+La complexité de de cette fonction donc **O(n)**.
 
 
+### transfert()
 
-### transfert();
+La fonction de transfert d'argent tente d'abord de retirer l'argent du compte débiteur, pour cela elle fait appelle à la fonction `payer` qui a une complexité de **O(n\*m)**, le reste des instructions ont un coût constant. La complexité est donc de **O(n\*m)**.
 
-**O(n\*m)** à cause de la fonction `soldeEtudiant()`.
+### afficherTransaction()
 
-### afficherTransaction();
+Cette fonction d'affichage présente une complexité constante : **O(1)**.
 
-**O(1)**.
+### getBlock()
 
-### getBlock();
+Pour obtenir le bloc dans la Blockchain constituée de _n_ blocs (liste chainée), au pire cas, le bloc se situe en dernier, la complexité au pire cas est alors de **O(n)**.
 
-**O(n)**.
+### exporter()
 
-### liberer();
+L'exportation des _n_ transactions se fait de manière linéaire, on écrit ligne par ligne dans un fichier les transactions, la complexité est donc de **O(n)**.
 
-**O(n\*m)**.
+### insert()
+
+L'ajout d'une transaction à son timestamp dans une liste contenant _n_  `Timestamp` triés de la plus ancien au la plus récent devra au pire cas parcourir les _n_ `Timestamps` transactions (cas où la transaction est la plus récente de la liste), on a donc une complexité **O(n)**.
+
+### importer()
+
+Pour un fichier faisant _n_ lignes, on doit lire itérativement chaque ligne. Chaque ligne correspondant à une transaction, elles sont ajoutées à une liste chaînée et triée de transactions appellée `timestampList` à l'aide de la fonction `insert` qui présente une complexité de O(n). Après cela, on devra reparcourir chaque transaction pour l'ajouter à la blockchain. On a donc une complexité au pire cas (cas où le fichier ne serait pas trié et qu'il contiendrait une transaction par date) de O(2n*n) ~ **O(n²)**.
+
+### void liberer()
+`liberer()` Parcours les _n_ blocs de la liste et pour chacun de ces blocs, on parcours les _m_ transactions qu'il contient. Au pire cas, on _m_ maximum dans tous les blocs (tous les blocs contiennent le même nombre de transactions). Par conséquent, on a **O(n\*m)**.
+
+### freeTimestamp()
+Cette fonction ne s'occupe que de libérer l'espace mémoire des `Timestamp` et non de leur transactions. Par conséquent pour une liste chainée de  _n_ `Timestamp` la complexité sera de **O(n)**. 
+
+### Fonctions utilitaires
+
+#### DatePlusDays(struct tm *date, int days)
+
+Cette fonction présente une complexité constante : **O(1)**.
+
+#### int max(int a, int b)
+
+Cette fonction présente une complexité constante : **O(1)**.
+
+
