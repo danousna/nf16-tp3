@@ -1,11 +1,10 @@
 # NF16 - TP3 - Blockchain
-NF16 - TP3 - BlockChain
 
-### Todo :
-- complexité des fonctions demandées (Léo) (Natan : j'ai un peu commencé).
-- expliquer la modification du prototype de la fonction `float totalTransactionEtudiantBlock(int idEtu, T_Block * b)` (pointeur T_Block au lieu T_Block)
+_Natan DANOUS_ & _Léo-Gad JOURNEL_ - GI02 à l'UTC.
 
 _Le but de ce TP est d'implémenter une BlockChain simplifiée. Une blockchain permet le stockage d'informations (pas forcément financières) de manière décentralisée. C'est une base de données distribuée. L'intérêt de cette technologie est qu'elle est pratiquement impossible à altérer, en effet la liste des transactions étant chaînée, chaque bloc contient la signature numérique du bloc précédent (et par conséquent si l'on modifie un bloc, la signature des blocs change)._
+
+***
 
 ## Choix d'architecture
 
@@ -39,10 +38,12 @@ Une fois la liste construite, il suffit de lire de manière linéaire la liste p
 
 _timestamp_ : **POSIX timestamp**   Il s'agit du nombre de secondes écoulées depuis le 1er janvier 1970 00:00:00 UTC jusqu'à l'événement à dater, hors secondes intercalaires. (source [Wikipedia - Heure Unix](https://fr.wikipedia.org/wiki/Heure_Unix))
 
+### Modifications sur les fonctions
+
+Nous avons modifié le prototype de la fonction `float totalTransactionEtudiantBlock(int idEtu, T_Block * b)`, nous utilisons un pointeur pointeur T_Block au lieu d'un passage de structure T_Block.
+
 ### Fonctions supplémentaires
 #### `blockchain.c`
-Fonctions supplémentaires : 
-
 - `T_Block *getBlock(int id, BlockChain bc);` qui permet de récupérer plus simplement un block en renseignant son `id`. Cette fonction nous est utile dans le fichier interface pour afficher les transactions d'un block spécifique.
 
 - `void liberer();` qui permet de libérer l'espace mémoire occupé par la blockchain. Cette fonction parcourt la blockchain et toutes les transactions et libère celles-ci puis le block correspondant. Elle est appelée dans le `main.c` avec un `atexit()` ce qui permet, en cas d'arrêt normal du programme, de libérer la mémoire. 
@@ -62,6 +63,8 @@ Mise à part les fonctions correspondant aux 10 options et la fonction d'afficha
 #### `tests.c`
 
 Ce fichier contient l'ensemble des tests qui assurent le bon comportement de la Blockchain. Seules les fonctions de `blockchain.c` ont été testées de cette manière. Il est possible de lancer les tests avec la fonction `initTests();` .
+
+***
 
 ## Complexité des fonctions
 
@@ -123,13 +126,11 @@ Pour un fichier faisant _n_ lignes, on doit lire itérativement chaque ligne. Ch
 ### freeTimestamp()
 Cette fonction ne s'occupe que de libérer l'espace mémoire des `Timestamp` et non de leur transactions. Par conséquent pour une liste chainée de  _n_ `Timestamp` la complexité sera de **O(n)**. 
 
-### Fonctions utilitaires
-
-#### DatePlusDays(struct tm *date, int days)
+### DatePlusDays()
 
 Cette fonction présente une complexité constante : **O(1)**.
 
-#### int max(int a, int b)
+### max()
 
 Cette fonction présente une complexité constante : **O(1)**.
 
