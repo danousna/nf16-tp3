@@ -442,7 +442,7 @@ BlockChain importer(char *fileName) {
                 // calcul de combien de blocs vides à ajouter
                 // depuis le dernier timestamp
                 int nbDaysSinceLastBlock = max(0, (difftime(t->timestamp, lastTimestamp) / 86400) - 1);
-                for (int i = 1; i < nbDaysSinceLastBlock; ++i) {
+                for (int i = 0; i < nbDaysSinceLastBlock; ++i) {
                     blockChain = ajouterBlock(blockChain);
                 }
 
@@ -556,7 +556,7 @@ T_Timestamp *insert(long timestamp, T_Transaction *transaction, T_Timestamp *tim
  * @param int b
  * @return int
  */
-max(int a, int b) {
+int max(int a, int b) {
     if (a >= b)
         return a;
     else
