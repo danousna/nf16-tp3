@@ -37,11 +37,9 @@ BlockChain ajouterBlock(BlockChain bc) {
     if (bc == NULL) {
         newB->id = 0;
         newB->suiv = NULL;
-        printf("Block #%d -> ", newB->id);
     } else {
         newB->id = bc->id + 1;
         newB->suiv = bc;
-        printf("Block #%d -> ", newB->id);
     }
 
     newB->liste = NULL;
@@ -266,16 +264,12 @@ void liberer() {
 
                 T_Transaction *transaction_suiv = bc->liste->suiv;
 
-                // free(bc->liste->id);
-                // free(bc->liste->montant);
-                // free(bc->liste->desc);
                 free(bc->liste);
 
                 bc->liste = transaction_suiv;
             }
         }
 
-        //free(bc->id);
         free(bc);
 
         bc = block_suiv;

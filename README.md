@@ -69,7 +69,7 @@ Ce fichier contient l'ensemble des tests qui assurent le bon comportement de la 
 ## Complexité des fonctions
 
 Nous traiterons uniquement les fonctions relatives à la blockchain et non les fonctions d'interface.
-Les fonctions de tests n'ayant qu'une utilité lors de développements, leur complexité ne sera pas abordée non plus.
+Les fonctions de tests n'ayant une utilité que lors du développement, leur complexité ne sera pas abordée non plus.
 
 ### ajouterTransaction()
 
@@ -114,17 +114,17 @@ Pour exporter les transactions, on doit parcourir les _m_ blocs, et pour chacun 
 
 ### insert()
 
-L'ajout d'une transaction à son timestamp dans une liste contenant _n_  `Timestamp` triés de la plus ancien au la plus récent devra au pire cas parcourir les _n_ `Timestamps` transactions (cas où la transaction est la plus récente de la liste), on a donc une complexité **O(n)**.
+L'ajout d'une transaction à son timestamp dans une liste contenant _n_ `Timestamp` triés de la plus ancien au la plus récent devra au pire cas parcourir les _n_ `Timestamps` transactions (cas où la transaction est la plus récente de la liste), on a donc une complexité **O(n)**.
 
 ### importer()
 
-Pour un fichier faisant _n_ lignes, on doit lire itérativement chaque ligne. Chaque ligne correspondant à une transaction, elles sont ajoutées à une liste chaînée et triée de transactions appelée `timestampList` à l'aide de la fonction `insert` qui présente une complexité de O(n). Après cela, on devra reparcourir chaque transaction pour l'ajouter à la blockchain. On a donc une complexité au pire cas (cas où le fichier ne serait pas trié et qu'il contiendrait une transaction par date) de O(2n*n) ~ **O(n²)**.
+Pour un fichier faisant _n_ lignes, on doit lire itérativement chaque ligne. Chaque ligne correspondant à une transaction, elles sont ajoutées à une liste chaînée et triée de transactions appelée `timestampList` à l'aide de la fonction `insert` qui présente une complexité de O(n). Après cela, on devra reparcourir chaque transaction pour l'ajouter à la blockchain. On a donc une complexité au pire cas (cas où le fichier ne serait pas trié et qu'il contiendrait une transaction par date) de O(2n\*n) ~ **O(n²)**.
 
 ### void liberer()
 `liberer()` Parcours les _n_ blocs de la liste et pour chacun de ces blocs, on parcours les _m_ transactions qu'il contient. Au pire cas, on _m_ maximum dans tous les blocs (tous les blocs contiennent le même nombre de transactions). Par conséquent, on a **O(n\*m)**.
 
 ### freeTimestamp()
-Cette fonction ne s'occupe que de libérer l'espace mémoire des `Timestamp` et non de leurs transactions. Par conséquent pour une liste chainée de  _n_ `Timestamp` la complexité sera de **O(n)**.
+Cette fonction ne s'occupe que de libérer l'espace mémoire des `Timestamp` et non de leurs transactions. Par conséquent pour une liste chainée de _n_ `Timestamp` la complexité sera de **O(n)**.
 
 ### DatePlusDays()
 
